@@ -6,6 +6,7 @@ import Mugs from './components/Mugs';
 import Navbar from './components/Navbar'
 import Caps from './components/Caps';
 import Footer from './components/Footer';
+import SingleProductPage from './components/SingleProductPage';
 
 function App() {
 
@@ -18,6 +19,7 @@ function App() {
           <Route path='/Tshirt' element={<Tshirt></Tshirt>} ></Route>
           <Route path='/Mugs' element={<Mugs></Mugs>} ></Route>
           <Route path='/Caps' element={<Caps></Caps>}></Route>
+          <Route path='/product' element={<SingleProductPage></SingleProductPage>}></Route>
 
         </Routes>
     
