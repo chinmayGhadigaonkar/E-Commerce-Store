@@ -7,6 +7,8 @@ import Navbar from './components/Navbar'
 import Caps from './components/Caps';
 import Footer from './components/Footer';
 import SingleProductPage from './components/SingleProductPage';
+import Login from './Pages/Login'
+import Signup from './Pages/Signup';
 
 function App() {
 
@@ -20,6 +22,11 @@ function App() {
           <Route path='/Mugs' element={<Mugs></Mugs>} ></Route>
           <Route path='/Caps' element={<Caps></Caps>}></Route>
           <Route path='/product' element={<SingleProductPage></SingleProductPage>}></Route>
+          <Route path='/product' element={<SingleProductPage></SingleProductPage>}></Route>
+          <Route path='/login' element={<Login></Login>}></Route>
+          <Route path='/signup' element={<Signup/>}></Route>
+
+
 
         </Routes>
     

@@ -17,7 +17,7 @@ const Product = () => {
     <div className="flex flex-wrap sm:-m-4 -mx-4 -mb-10 -mt-4">
       <div className="p-4 md:w-1/3 sm:mb-0 mb-6">
         <div className="rounded-lg h-64 overflow-hidden">
-          <img alt="content" className="object-cover object-center h-full w-full" src="https://m.media-amazon.com/images/I/514LYTdn4yL._UX569_.jpg"/>
+          <img alt="content" className="object-fit object-center h-full w-full" src="https://m.media-amazon.com/images/I/514LYTdn4yL._UX569_.jpg"/>
         </div>
         <h2 className="text-xl font-medium title-font text-gray-900 mt-5">T-Shirts</h2>
         <p className="text-base leading-relaxed mt-2">We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts, and casual tshirts for everyday wear. All of our tshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect tshirt for you!.</p>
