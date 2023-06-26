@@ -1,0 +1,9 @@
+{"title"::"hello world",
+"slug":"hello world",
+"desc":"1211asd dad sadasdsad saddsads ",
+"img":["hello world"],
+"category":"hello world",
+ "size":"hello world",
+"color":"hello world",
+"price":450,
+"availableQty":6}
