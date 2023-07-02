@@ -1,6 +1,6 @@
 import React from 'react'
 import { Carousel } from "@material-tailwind/react";
-import Product from '../components/Product';
+import Product from '../components/product/Product';
 
 import img1 from '../IMG/image1.avif'
 import img2 from '../IMG/img2.jpg'

@@ -45,7 +45,7 @@ router.get("/getproduct/:slug", async (req, res) => {
 // update a product using id    
 router.put("/updateproduct/:id", async (req, res) => {
     try {
-        const { query } = req.body
+        const  query = req.body
         let product = await Product.findById(req.params.id);
 
         if(!product){

@@ -16,7 +16,9 @@ const Navbar = () => {
         <>
             <div className="h-28   shadow-md  flex flex-col overflow-hidden-x md:flex-row w-[100%] justify-between items-center  ">
                 <div className="logo md:order-1 flex  justify-between md:w-[60vw] w-[100vw] order-1   items-center ">
-                    <h1 className=" ml-2 text-center font-bold text-2xl py-6 text-purple-500" >E-Commerce Store</h1>
+                    <Link to='/'>
+                    <h1 className=" ml-2 text-center font-bold text-2xl py-6 text-purple-500 cursor-pointer " >E-Commerce Store</h1>
+                    </Link>
                     
                         
                     <div className="menu md:hidden  w-[50px] h-[50px]   ">

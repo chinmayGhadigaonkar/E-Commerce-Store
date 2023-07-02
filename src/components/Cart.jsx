@@ -5,7 +5,6 @@ import {ImCross} from "react-icons/im"
 
 
 const Cart = ({setCart}) => {
-  
 
   return (
     <>
