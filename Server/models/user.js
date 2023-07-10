@@ -1,4 +1,5 @@
 import mongoose, { model } from 'mongoose'
+import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema({
     name:{
@@ -12,7 +13,7 @@ const userSchema = new mongoose.Schema({
     },
     password:{
         type:String,
-        require:[true,'Enter your password']
+        require:[true,'Enter your password'],
     },
     isAdmin: {
         type: Boolean,
@@ -20,6 +21,14 @@ const userSchema = new mongoose.Schema({
         default: false,
       },
 },{timestamps:true})
+
+
+userSchema.methods.getJWTToken = function(){
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
+        expiresIn: '30d',
+    })
+
+}
 
 
 const User = mongoose.model('User', userSchema)

@@ -27,7 +27,6 @@ const productSlice= createSlice({
           state.status = STATUSES.IDLE
         })
         .addCase(productFetch.rejected, (state, action) => {
-            console.log(action.error)
             state.status = STATUSES.ERROR
           })
       },
@@ -36,8 +35,8 @@ const productSlice= createSlice({
 
 export const productFetch =  createAsyncThunk("fetch/allproduct", async(state , action)=>{
     const res = await fetch("http://localhost:8000/products/getproducts")
-    const products = await res.json()
-    return JSON.parse(JSON.stringify(products));
+    const {product} = await res.json()
+    return JSON.parse(JSON.stringify(product));
 }
 )
 

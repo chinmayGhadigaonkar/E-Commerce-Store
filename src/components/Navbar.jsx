@@ -27,9 +27,9 @@ const Navbar = () => {
                 </div>
                
                 <div className={` z-50 opacity-[1] shadow-md md:shadow-none py-5 order-3 flex md:order-2  md:justify-end mx-4 font-bold text-center w-[100%] md:w-[60%] md:h-20 h-52 bg-white list-none space-x-4  transition-transform duration-200 md:translate-x-0 ${show ? 'translate-x-0 md:flex-row flex-col ' : 'translate-x-[1000px]  '}   `}>              
-                        <li className="my-2 font-semibold text-gray-900 md:text-xl text-center  hover:text-purple-500 " onClick={() => setShow(show(false))}  > <Link  to='/Tshirt'>T-Shirts</Link></li>
-                        <li className="my-2 font-semibold text-gray-900  md:text-xl text-center  hover:text-purple-500 " onClick={() => setShow(show(false))}  > <Link  to='/Mugs'>Mugs</Link></li>
-                        <li className="my-2 font-semibold text-gray-900  md:text-xl text-center hover:text-purple-500  " onClick={() => setShow(show(false))} > <Link  to='/Caps'>Caps</Link></li>
+                        <li className="my-2 font-semibold text-gray-900 md:text-xl text-center  hover:text-purple-500 " > <Link  to='/Tshirt'>T-Shirts</Link></li>
+                        <li className="my-2 font-semibold text-gray-900  md:text-xl text-center  hover:text-purple-500 "   > <Link  to='/Mugs'>Mugs</Link></li>
+                        <li className="my-2 font-semibold text-gray-900  md:text-xl text-center hover:text-purple-500  "> <Link  to='/Caps'>Caps</Link></li>
                        <li>
                         <Link to='/login'>
                         <button className="w-20  h-10 font-semibold rounded-md bg-purple-500  border-2 border-white text-white cursor-pointer text-center hover:bg-white hover:text-gray-500 hover:border-purple-500  ">Login</button>

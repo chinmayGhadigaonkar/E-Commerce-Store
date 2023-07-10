@@ -2,12 +2,11 @@ import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { filterProducts } from '../../utils/filterProducts'
-import SingleProductPage from '../product/SingleProductPage'
 
 
 const Tshirt = () => {
-  const { products } = useSelector(state => state.products)
-const navigate = useNavigate()
+  const  {products}  = useSelector(state => state.products)
+  // console.log(product);
   const filterProduct  = filterProducts(products , "T-shirt")
 
   
@@ -26,9 +25,9 @@ const navigate = useNavigate()
             {
               filterProduct.map((product) => {
                 return (
-                  <>
+                 
                     <div key={product._id} className="lg:w-3/12 md:w-1/3  p-4 w-full border-2 mx-2 my-2">
-                    <Link to= {`/product/${product.slug}`} onClick={()=>{handleClick(product.slug)}}>
+                    <Link to= {`/product/${product.slug}`} >
                         <div className="block relative rounded overflow-hidden bg-purple-900 cursor-pointer">
                           <img alt="ecommerce" className="object-fit object-center w-full h-[20rem] block" src={product.img[0]} />
                         </div>
@@ -40,7 +39,6 @@ const navigate = useNavigate()
                       </Link>
                     </div>
 
-                  </>
                 )
               })
             }

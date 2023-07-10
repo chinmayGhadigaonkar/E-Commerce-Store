@@ -1,22 +1,31 @@
 import React, { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
+import MultiImg from './MultiImg'
 
 const SingleProductPage = () => {
     const [product,setProduct] = useState([]) 
+    const [ProductImg , setProductImg] = useState([])
+
+    
+
+
+
 
     const location = useLocation()
 
     const fetchdata =async()=>{
         const res = await fetch(`http://localhost:8000/products/getproduct/${location.pathname.split("/")[2]}`)
-        const singleproduct = await res.json()
-        console.log(singleproduct)
-        setProduct(singleproduct)   
+        const {product} = await res.json()
+        setProduct(product)   
+        setProductImg(product[0].img)
     }
+
     
  useEffect(()=>{
     fetchdata()
  },[])
 
+ 
 
 
     return (
@@ -25,16 +34,32 @@ const SingleProductPage = () => {
             {
                 product.map((p)=>{
                     return(
-                        <>
-                        
-                    <section className="text-gray-600 body-font overflow-hidden">
+                    <section key={p._id} className="text-gray-600 body-font overflow-hidden">
                 <div className="container px-5 py-24 mx-auto">
 
                    
 
-                    <div className="lg:w-4/5 mx-auto flex flex-wrap">
-                        <img alt="ecommerce" className="lg:w-1/2 w-full lg:h-1/3 h-[100%] object-cover object-center rounded" src={p.img}/>
-                            <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                    <div className="lg:w-4/5 mx-auto flex flex-col justify-center items-center ">
+                        <div className='w-full'>
+
+                        <img alt="ecommerce" className="lg:w-1/2  mx-auto w-full lg:h-1/3 h-[100%] object-cover object-center rounded" src={p.img[0]}/>
+                        
+                        </div>
+                        <div className='flex  justify-between items-center space-x-2' >
+
+                             {
+                                ProductImg.map((img)=>{
+                                    return(
+
+                                        
+                                        <MultiImg key={img} IMG={img} ></MultiImg> 
+         
+                                    )
+                                })
+                             }
+                               
+                        </div>
+                            <div className="lg:w-2/2 w-full lg:pt-10 lg:py-6 mt-6 lg:mt-0">
                                 <h2 className="text-sm title-font text-gray-500 tracking-widest">E-Commerce Store</h2>
                                 <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{p.title} </h1>
                                 <div className="flex mb-4">
@@ -89,7 +114,7 @@ const SingleProductPage = () => {
             </section>
 
 
-                        </>
+                        
                     )
 
                 })

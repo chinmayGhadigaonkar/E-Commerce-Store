@@ -22,8 +22,7 @@ const Caps = () => {
             {
               filterProduct.map((product) => {
                 return (
-                  <>
-                    <div key={product._id} className="lg:w-3/12 md:w-1/3 h-[35rem] p-4 w-full border-2 mx-2 my-2">
+                   <div key={product._id} className="lg:w-3/12 md:w-1/3 h-[35rem] p-4 w-full border-2 mx-2 my-2">
                       <Link to= {`/product/${product.slug}`}>
                         <div className=" rounded overflow-hidden bg-purple-900 flex justify-center items-center cursor-pointer">
                           <img alt="ecommerce" className="object-fit object-center w-full h-[20rem] block" src={product.img[0]} />
@@ -35,8 +34,6 @@ const Caps = () => {
                         </div>
                       </Link>
                     </div>
-
-                  </>
                 )
               })
             }

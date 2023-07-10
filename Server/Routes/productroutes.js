@@ -1,13 +1,15 @@
 import express, { Router } from "express"
 import Product from "../models/product.js"
+import {authMiddleware,authorizeRoles}  from '../Midware/authMiddleware.js'
 const router = Router()
 
 
+
 // fetch all products from database
-router.get("/getproducts", async (req, res) => {
+router.get("/getproducts" ,async (req, res) => {
     try {
-        const data = await Product.find()
-        res.status(200).json(data)
+        const product = await Product.find()
+        res.status(200).json({product})
     }
     catch (err) {
         res.status(404).json({ err: "something went to wrong" })
@@ -15,13 +17,13 @@ router.get("/getproducts", async (req, res) => {
 
 })
 
-// add products in database 
-router.post("/addproducts", async (req, res) => {
+// add products in database   --- Admin 
+router.post("/addproducts" , authMiddleware,authorizeRoles(true)  ,authMiddleware,async (req, res) => {
     try {
         const { title, slug, desc, img, category, size, color, price, availableQty } = req.body
         const data = new Product({ title, slug, desc, img, category, size, color, price, availableQty })
-        const result = await data.save()
-        res.status(200).json(result)
+        const product = await data.save()
+        res.status(200).json({product})
     }
     catch (err) {
         res.status(404).json({ err: "something went to wrong" })
@@ -30,20 +32,19 @@ router.post("/addproducts", async (req, res) => {
 })
 
 // fetch a product using slug
-router.get("/getproduct/:slug", async (req, res) => {
-    try {
-        const slug = req.params.slug
+router.get("/getproduct/:slug" ,async (req, res) => {
+    try {        const slug = req.params.slug
 
-        const data = await Product.find({slug});
-        res.status(200).json(data)
+        const product = await Product.find({slug});
+        res.status(200).json({product})
     }
     catch (err) {
         res.status(404).json({ err: "something went to wrong" })
     }   
 })
 
-// update a product using id    
-router.put("/updateproduct/:id", async (req, res) => {
+// update a product using id   --- Admin  
+router.put("/updateproduct/:id" , authMiddleware,authorizeRoles(true) , authMiddleware,async (req, res) => {
     try {
         const  query = req.body
         let product = await Product.findById(req.params.id);
@@ -55,22 +56,22 @@ router.put("/updateproduct/:id", async (req, res) => {
         product = await Product.findByIdAndUpdate(req.params.id,{$set:query},{new:true})
 
 
-        res.status(200).json(product)
+        res.status(200).json({success : true ,product})
     }
     catch (err) {
         res.status(404).json({ err: "something went to wrong" })
     }   
 })
 
-// delete product
-router.delete("/deleteproduct/:id",async(req,res)=>{
+// delete product  --- Admin 
+router.delete("/deleteproduct/:id" , authMiddleware,authorizeRoles(true) , authMiddleware,async(req,res)=>{
     try{
         let data= await Product.findByIdAndDelete(req.params.id)
         if (!data) {
             return "Not found";
           }
 
-        res.status(200).json(data)
+        res.status(200).json({success:true ,msg:"Delete Product sucessfully" })
     }
     catch(err){
         res.status(404).json({ err: "something went to wrong" })

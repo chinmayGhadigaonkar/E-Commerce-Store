@@ -23,7 +23,6 @@ const Mugs = () => {
             {
               filterProduct.map((product) => {
                 return (
-                  <>
                     <div key={product._id} className="lg:w-3/12 md:w-1/3 h-[35rem] p-4 w-full border-2 mx-2 my-2">
                       <Link to= {`/product/${product.slug}`}>
                         <div className="block relative rounded overflow-hidden bg-purple-900 cursor-pointer">
@@ -37,7 +36,6 @@ const Mugs = () => {
                       </Link>
                     </div>
 
-                  </>
                 )
               })
             }
