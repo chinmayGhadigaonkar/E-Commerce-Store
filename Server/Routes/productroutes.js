@@ -33,8 +33,8 @@ router.post("/addproducts" , authMiddleware,authorizeRoles(true)  ,authMiddlewar
 
 // fetch a product using slug
 router.get("/getproduct/:slug" ,async (req, res) => {
-    try {        const slug = req.params.slug
-
+    try {       
+         const slug = req.params.slug
         const product = await Product.find({slug});
         res.status(200).json({product})
     }

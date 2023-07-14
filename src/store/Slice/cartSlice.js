@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+
 const initialState = []
 
 const cartSlice = createSlice({
@@ -12,7 +13,6 @@ const cartSlice = createSlice({
             return state
            }
            else{
-
                state.push(action.payload)
            }
         },

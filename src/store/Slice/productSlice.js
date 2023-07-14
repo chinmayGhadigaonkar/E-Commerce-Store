@@ -14,8 +14,6 @@ const STATUSES ={
 const productSlice= createSlice({
     name : "products" ,
     initialState,
-    reducers:{
-    },
     extraReducers: (builder) => {
         builder
         .addCase(productFetch.pending, (state, action) => {

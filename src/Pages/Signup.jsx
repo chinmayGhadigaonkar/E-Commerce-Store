@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
+import { VITE_BACKEND_URL } from '../config';
 
 
 const Signup = () => {
@@ -10,9 +11,9 @@ const navigator = useNavigate()
   const signupUser =async(e)=>{
     
         e.preventDefault();
-        console.log(import.meta.env.BACKENDURL);
+     
     try {
-      const res = await fetch(`${import.meta.env.BACKENDURL}/auth/createuser`, {
+      const res = await fetch(`${VITE_BACKEND_URL}/auth/createuser`, {
         method: 'POST',
         headers: {
           "content-type":"application/json"

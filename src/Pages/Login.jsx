@@ -1,17 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { VITE_BACKEND_URL } from '../config';
-
+import { toast } from 'react-hot-toast';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../store/Slice/userSlice';
 const Login = () => {
-  
+
 
   const [login, setlogin] = useState({ email: "", password: "" });
- 
+  const dispach = useDispatch()
+
   const navigator = useNavigate()
 
   const loginUser = async (e) => {
-
     e.preventDefault();
     try {
       const res = await fetch(`${VITE_BACKEND_URL}/auth/login`, {
@@ -25,28 +27,32 @@ const Login = () => {
           password: login.password[0]
         })
       })
-      console.log(JSON.stringify(import.meta.env.VITE_BACKEND_URL));
-      const data = await res.json()
-      console.log(data);
-      setName(data.user.name)
-      console.log(data.user.name);
-      
-      
-
-      navigator('/')
+      const { success, user ,msg } = await res.json()
+      if (success) {
+        dispach(setUser(user))
+        setlogin({ email: "", password: "" })
+        toast.success("Login successfully")
+        navigator('/')
+      }
+      else {
+        toast.error(msg)
+      }
 
     }
-    catch (e) {
-
-      console.log(e)
+    catch (error) {
+      toast.error(error)
     }
 
   }
+  useEffect(() => {
+    loginUser()
+  }, [])
   // console.log(process.env.BACKENDURL);
   const handleChange = (event) => {
 
     setlogin({ ...login, [event.target.name]: [event.target.value] });
   }
+
 
   return (
     <>
@@ -72,11 +78,11 @@ const Login = () => {
               </div>
 
               <Link to='/Signup'>  <p className='text-sm py-1 text-purple-500 cursor-pointer'>Create new Account</p></Link>
-                <div className="p-2 w-full">
+              <div className="p-2 w-full">
                 <button className="flex mx-auto text-white bg-purple-500 border-0 py-2 px-8 focus:outline-none hover:bg-purple-600 rounded text-lg" onClick={loginUser}>Login</button>
               </div>
-              
-              
+
+
 
             </div>
           </div>
