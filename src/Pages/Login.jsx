@@ -7,7 +7,6 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '../store/Slice/userSlice';
 const Login = () => {
 
-
   const [login, setlogin] = useState({ email: "", password: "" });
   const dispach = useDispatch()
 
@@ -40,13 +39,13 @@ const Login = () => {
 
     }
     catch (error) {
-      toast.error(error)
+      toast.error("Something went's wrong. Please try again")
     }
 
   }
-  useEffect(() => {
-    loginUser()
-  }, [])
+  // useEffect(() => {
+  //   loginUser()
+  // }, [])
   // console.log(process.env.BACKENDURL);
   const handleChange = (event) => {
 

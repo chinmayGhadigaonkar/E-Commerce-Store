@@ -20,7 +20,7 @@ router.post("/createuser", body("name", "Enter valid name").isLength({ min: 3 })
             let success = false
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                return res.status(400).json({ errors: errors.array() });
+                return res.status(400).json({ msg: "All field require to filled" });
             }
 
 
@@ -38,7 +38,7 @@ router.post("/createuser", body("name", "Enter valid name").isLength({ min: 3 })
             setCookie(user, 201, res)
         }
         catch (e) {
-            console.log(e);
+            // console.log(e);
             res.statusCode(500).json({ error: e });
         }
     })
@@ -53,7 +53,7 @@ router.post('/login', [
     // If there are errors, return Bad request and the errors
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-       
+
 
         return res.status(400).json({ msg: "email or password cannot be blank" });
     }
