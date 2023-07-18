@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { AiFillMinusCircle } from "react-icons/ai"
-import { AiFillPlusCircle } from "react-icons/ai"
 import { ImCross } from "react-icons/im"
 import { useSelector } from 'react-redux'
+import CartItem from './CartItem'
 
 
 
@@ -18,24 +17,7 @@ const Cart = ({ setCart }) => {
 
         {
           Product.map(product => {
-            return (
-              <div className="img flex ml-2 justify-between items-center" key={product._id}>
-                <div className=' flex '>
-                  <img alt="ecommerce" className=" object-fill w-[80px] border-2 mx-2 h-[80px] " src={product.img[0]} />
-                  <h4 className='text-base  mt-2  w-52 font-semibold'>{product.title}</h4>
-                </div>
-                <div>
-                <p className='text-base  mt-2  w-22 font-semibold'>Price:- {product.price}</p>
-                  </div>
-                <div className='  space-x-3 mr-12  flex  '>
-                  <AiFillMinusCircle className='my-1 text-purple-500 cursor-pointer text-lg  ' />
-                  <span className='mx-2'>2 </span>
-                  <AiFillPlusCircle className='my-1 text-purple-500  cursor-pointer  text-lg ' ></AiFillPlusCircle>
-                </div>
-                
-
-              </div>
-            )
+            return <CartItem product={product} key={product._id} ></CartItem>
 
           })
         }

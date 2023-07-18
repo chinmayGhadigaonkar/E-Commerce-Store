@@ -5,9 +5,9 @@ import { BiLogIn, BiLogOut } from "react-icons/bi"
 import { VITE_BACKEND_URL } from '../config';
 import { Toaster, toast } from "react-hot-toast"
 import { Link, useNavigate } from "react-router-dom"
-import Cart from "./Cart"
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { removeUser } from "../store/Slice/userSlice"
+import Cart from "./cart/Cart";
 
 
 
@@ -21,6 +21,8 @@ const Navbar = () => {
     }
 
     const dispatch = useDispatch()
+
+    const product = useSelector((state)=>state.cart)
     const onLogout = async (e) => {
         e.preventDefault();
 
@@ -79,18 +81,19 @@ const Navbar = () => {
                                         <BiLogOut className="w-8 h-12   text-purple-500  cursor-pointer  " onClick={onLogout} />
                                     </Link></div>)
                         }
-
-
                     </li>
 
                 </div>
 
 
-                <div className=" md:static  absolute right-10  duration-200   top-5 md:order-3 w-12 justify-between items-end flex order-2  ">
-                    <AiOutlineShoppingCart onClick={() => { setCart(true) }} className="w-8 h-9   text-purple-500  cursor-pointer  mr-4"></AiOutlineShoppingCart>
+                <div className=" md:static  relative   inline-flex right-10  duration-200   top-5 md:order-3 w-12 justify-between items-end  order-2  ">
+                    <AiOutlineShoppingCart onClick={() => { setCart(true) }} className="w-8 h-9   text-purple-500  cursor-pointer  ">
+                    </AiOutlineShoppingCart>
+                    <div className=" relative inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-purple-500 border-2 border-white rounded-full -top-4 right-1 dark:border-purple-500 ">{product.length}</div>
+                    
                 </div>
             </div>
-            <div className={`  h-full w-[100vw] md:w-[30vw] bg-white  z-50 opacity-[1] overflow-hidden-x absolute top-0 right-0  ${cart ? "translate-x-0 visible transition-transform duration-200 hover:text-purple-500" : "translate-x-[1000px] hidden "}`}>
+            <div className={`  h-full w-[100vw] md:w-[30vw] bg-white  z-50 opacity-[1] overflow-hidden-x absolute top-0 right-0  ${cart ? "translate-x-0 visible transition-transform duration-200" : "translate-x-[1000px] hidden "}`}>
                 <Cart setCart={setCart} ></Cart>
             </div>
             <Toaster position="top-right" reverseOrder={false} />
