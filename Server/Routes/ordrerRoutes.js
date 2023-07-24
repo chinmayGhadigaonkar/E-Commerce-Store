@@ -14,7 +14,6 @@ router.get("/getOrder",authMiddleware,authorizeRoles(true),async (req,res)=>{
     }
     catch(e){
         res.status(400).json("Order Not Found")
-        
     }
 })
 

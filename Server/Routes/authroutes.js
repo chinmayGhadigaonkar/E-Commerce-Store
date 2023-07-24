@@ -6,6 +6,7 @@ import User from "../models/user.js"
 
 import setCookie from "../utills/storetoken.js";
 import { authMiddleware, authorizeRoles } from "../Midware/authMiddleware.js";
+import Cart from "../models/cart.js";
 
 
 const router = Router()
@@ -20,7 +21,7 @@ router.post("/createuser", body("name", "Enter valid name").isLength({ min: 3 })
             let success = false
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-                return res.status(400).json({ msg: "All field require to filled" });
+                return res.status(400).json({success ,msg: "All field require to filled" });
             }
 
 
@@ -34,12 +35,12 @@ router.post("/createuser", body("name", "Enter valid name").isLength({ min: 3 })
                 password: hashpassword,
             })
 
-
+            const cart = await Cart.create({user: user._id})
             setCookie(user, 201, res)
         }
         catch (e) {
             // console.log(e);
-            res.statusCode(500).json({ error: e });
+            res.status(500).json({ error: e });
         }
     })
 

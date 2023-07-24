@@ -27,8 +27,9 @@ const Login = () => {
         })
       })
       const { success, user ,msg } = await res.json()
+      const {email}= user
       if (success) {
-        dispach(setUser(user))
+        dispach(setUser(email))
         setlogin({ email: "", password: "" })
         toast.success("Login successfully")
         navigator('/')
@@ -43,10 +44,7 @@ const Login = () => {
     }
 
   }
-  // useEffect(() => {
-  //   loginUser()
-  // }, [])
-  // console.log(process.env.BACKENDURL);
+ 
   const handleChange = (event) => {
 
     setlogin({ ...login, [event.target.name]: [event.target.value] });

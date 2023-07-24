@@ -14,7 +14,7 @@ function setCookie(user, statusCode, res ) {
       
     })
 
-  }
+  } 
   
   
   

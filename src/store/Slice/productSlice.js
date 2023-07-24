@@ -1,4 +1,5 @@
 import { createSlice , createAsyncThunk} from "@reduxjs/toolkit";
+import { VITE_BACKEND_URL } from "../../config";
 
 const initialState = {
     products:[],
@@ -32,7 +33,7 @@ const productSlice= createSlice({
 
 
 export const productFetch =  createAsyncThunk("fetch/allproduct", async(state , action)=>{
-    const res = await fetch("http://localhost:8000/products/getproducts")
+    const res = await fetch(`${VITE_BACKEND_URL}/products/getproducts`)
     const {product} = await res.json()
     return JSON.parse(JSON.stringify(product));
 }

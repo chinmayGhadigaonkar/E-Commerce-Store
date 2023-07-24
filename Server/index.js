@@ -5,6 +5,7 @@ import connection from './connection.js'
 import routes from "./Routes/productroutes.js"
 import router from "./Routes/authroutes.js"
 import orouter from './Routes/ordrerRoutes.js'
+import cartrouter from './Routes/cartRoutes.js'
 import cookieParser from "cookie-parser"
 
 
@@ -28,6 +29,7 @@ app.use(cookieParser())
 app.use('/products',routes)
 app.use('/auth', router)
 app.use('/order', orouter)
+app.use('/cart', cartrouter )
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
