@@ -10,6 +10,7 @@ import { VITE_BACKEND_URL } from "../../config";
 const SingleProductPage = () => {
   const [product, setProduct] = useState([]);
   const [ProductImg, setProductImg] = useState([]);
+ 
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -28,6 +29,8 @@ const SingleProductPage = () => {
     }
   };
 
+  const [changeIMG ,setchangeIMG]= useState()
+
   //  Add To Cart
   const addCart = async (product) => {
     try {
@@ -35,8 +38,7 @@ const SingleProductPage = () => {
         method: "POST",
         headers: {
           "content-type": "application/json",
-        },
-       
+        }, 
         credentials: "include",
         body:JSON.stringify({
             products: product
@@ -44,7 +46,6 @@ const SingleProductPage = () => {
       });
 
       const {products}= await res.json();
-      console.log(products);
     } catch {
         toast.error("Something Went's to Wrong")
     }
@@ -53,7 +54,7 @@ const SingleProductPage = () => {
   const handleOnCart = (product) => {
     if (localStorage.getItem("userInfo")) {
         addCart(product)
-        console.log(product)
+        // console.log(product)
       dispatch(addToCart(product));
     } else {
       toast.error("Plz Login before add to cart");
@@ -61,6 +62,9 @@ const SingleProductPage = () => {
 
     // dispatch(calTotalPrice(product.price))
   };
+
+  
+  
 
   useEffect(() => {
     fetchdata();
@@ -76,15 +80,11 @@ const SingleProductPage = () => {
             <div className="container px-5 py-24 mx-auto">
               <div className="lg:w-4/5 mx-auto flex flex-col justify-center items-center ">
                 <div className="w-full">
-                  <img
-                    alt="ecommerce"
-                    className="lg:w-1/2  mx-auto w-full lg:h-1/3 h-[100%] object-cover object-center rounded"
-                    src={p.img[0]}
-                  />
+                  <img alt="ecommerce" className="lg:w-1/2  mx-auto w-full lg:h-1/3 h-[100%] object-cover object-center rounded" src={!changeIMG?p.img:changeIMG}  />
                 </div>
-                <div className="flex  justify-between items-center space-x-2">
+                <div className="flex  justify-between items-center space-x-2"  >
                   {ProductImg.map((img) => {
-                    return <MultiImg key={img} IMG={img}></MultiImg>;
+                    return <MultiImg key={img} IMG={img}  setchangeIMG={setchangeIMG} ></MultiImg>;
                   })}
                 </div>
                 <div className="lg:w-2/2 w-full lg:pt-10 lg:py-6 mt-6 lg:mt-0">

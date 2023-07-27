@@ -6,6 +6,11 @@ const initialState = {
   cartProduct: [],
   productTPrice: 0,
 };
+const STATUSES = {
+  IDLE: "idle",
+  ERROR: "error",
+  LOADING: "loading",
+};
 
 const cartSlice = createSlice({
   name: "cart",
@@ -38,32 +43,40 @@ const cartSlice = createSlice({
     clearCart(state, action) {
       (state.cartProduct = []), (state.productTPrice = 0);
     },
+
+    extraReducers: (builder) => {
+      builder
+        .addCase(cartFetch.pending, (state, action) => {
+          state.status = STATUSES.LOADING;
+        })
+        .addCase(cartFetch.fulfilled, (state, action) => {
+          state.products = action.payload;
+          let total = 0;
+          state.cartProduct.forEach((product) => {
+            total += product.price;
+          });
+          state.productTPrice = total;
+          state.status = STATUSES.IDLE;
+        })
+        .addCase(cartFetch.rejected, (state, action) => {
+          state.status = STATUSES.ERROR;
+        });
+    },
   },
 });
 
 export const cartFetch = createAsyncThunk(
   "fetch/allcartproduct",
   async (state, action) => {
-    const res = await fetch(`${VITE_BACKEND_URL}/cart/getcart`);
+    const res = await fetch(`${VITE_BACKEND_URL}/cart/getcart`,{
+      headers: {
+        "content-type": "application/json",
+      },
+      credentials: "include",
+    });
     const { products } = await res.json();
-    return JSON.parse(JSON.stringify(products));
-  },
-);
-
-export const addCart = createAsyncThunk(
-  "fetch/addproduct",
-  async (state, action) => {
-    const res = await fetch(`${VITE_BACKEND_URL}/cart/addtocart`);
-    const { products } = await res.json();
-    return JSON.parse(JSON.stringify(products));
-  },
-);
-
-export const removeItem = createAsyncThunk(
-  "fetch/allcartproduct",
-  async (state, action) => {
-    const res = await fetch(`${VITE_BACKEND_URL}/cart/deleteitem`);
-    const { products } = await res.json();
+    console.log(products);
+    
     return JSON.parse(JSON.stringify(products));
   },
 );

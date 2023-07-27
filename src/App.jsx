@@ -11,13 +11,21 @@ import Login from './Pages/Login'
 import Signup from './Pages/Signup';
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
-import { productFetch } from './store/Slice/productSlice';
+import { productFetch  } from './store/Slice/productSlice';
+import Checkout from './components/checkout/Checkout';
+import { cartFetch } from './store/Slice/cartSlice';
+import { useSelect } from '@material-tailwind/react';
+
+
+
 
 function App() {
 
   const dispatch = useDispatch()
+  // const {userInfo} = useSelect(state => state.userInfo)
   useEffect(()=>{
     dispatch(productFetch())
+    dispatch(cartFetch())
   },[])
 
   return (
@@ -33,6 +41,9 @@ function App() {
           <Route path='/product/:slug' element={<SingleProductPage></SingleProductPage>}></Route>
           <Route path='/login' element={<Login></Login>}></Route>
           <Route path='/signup' element={<Signup/>}></Route>
+          <Route path='/checkout' element={<Checkout/>}></Route>
+
+        
         </Routes>
     
       <Footer></Footer>

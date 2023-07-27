@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillMinusCircle } from "react-icons/ai";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { BsTrashFill } from "react-icons/bs";
 import { useDispatch } from "react-redux";
 import { removeCart } from "../../store/Slice/cartSlice";
-import { toast } from "react-hot-toast";
-
+import { VITE_BACKEND_URL } from "../../config";
 
 const CartItem = ({ product }) => {
   const [QuantityValue, setQuantityValue] = useState(1);
@@ -13,6 +12,9 @@ const CartItem = ({ product }) => {
 
   const deleteItem = async (product) => {
     try {
+      // console.log(product)
+
+      console.log(product);
       const res = await fetch(`${VITE_BACKEND_URL}/cart/deleteitem`, {
         method: "DELETE",
         headers: {
@@ -23,17 +25,18 @@ const CartItem = ({ product }) => {
           products: product,
         }),
       });
-      const { products } = await res.json();
-      console.log(products);
+      const result = await res.json();
+      console.log(result);
     } catch (e) {
-      toast.error("Something went's wrong. Please try again");
+      console.log("Something went's wrong. Please try again");
     }
   };
 
   const removeBtn = (product) => {
-    deleteItem(product);
     dispatch(removeCart(product));
   };
+  
+
   return (
     <div
       className="img flex ml-2 justify-between items-center"
@@ -81,6 +84,7 @@ const CartItem = ({ product }) => {
           className="h-5 w-6 text-purple-500 cursor-pointer"
           onClick={() => {
             removeBtn(product);
+            deleteItem(product);
           }}></BsTrashFill>
       </div>
     </div>

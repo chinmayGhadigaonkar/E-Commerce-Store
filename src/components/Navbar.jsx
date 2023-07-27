@@ -109,11 +109,8 @@ const Navbar = () => {
         </div>
       </div>
       <div
-        className={`  h-full w-[100vw] md:w-[30vw] bg-white  z-50 opacity-[1] overflow-hidden-x absolute top-0 right-0  ${
-          cart
-            ? "translate-x-0 visible transition-transform duration-200"
-            : "translate-x-[1000px] hidden "
-        }`}>
+        className={` h-screen w-[100vw] md:w-[30vw] bg-white  z-50 opacity-[1] overflow-hidden-x absolute top-0 right-0  ${
+          cart? "translate-x-0 visible transition-transform duration-200": "translate-x-[1000px] hidden " }`}>
         <Cart setCart={setCart}></Cart>
       </div>
       <Toaster position="top-right" reverseOrder={false} />

@@ -79,7 +79,6 @@ router.delete("/deleteitem", authMiddleware, async (req, res) => {
     const newArray = productsArray.filter((product) => {
       return product.title !== productName;
     });
-    console.log(productName);
     const result = await Cart.findByIdAndUpdate(cart._id, {
       products: newArray,
     });

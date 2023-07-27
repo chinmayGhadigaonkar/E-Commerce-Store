@@ -11,8 +11,8 @@ function setCookie(user, statusCode, res ) {
       success:true,
       user,
       token,
-      
-    })
+       
+    }) 
 
   } 
   
