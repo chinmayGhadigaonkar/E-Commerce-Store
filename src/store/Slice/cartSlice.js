@@ -43,14 +43,14 @@ const cartSlice = createSlice({
     clearCart(state, action) {
       (state.cartProduct = []), (state.productTPrice = 0);
     },
-
     extraReducers: (builder) => {
       builder
         .addCase(cartFetch.pending, (state, action) => {
           state.status = STATUSES.LOADING;
         })
         .addCase(cartFetch.fulfilled, (state, action) => {
-          state.products = action.payload;
+          state.cartProduct = action.payload
+        
           let total = 0;
           state.cartProduct.forEach((product) => {
             total += product.price;
@@ -74,10 +74,8 @@ export const cartFetch = createAsyncThunk(
       },
       credentials: "include",
     });
-    const { products } = await res.json();
-    console.log(products);
-    
-    return JSON.parse(JSON.stringify(products));
+    const {products} = await res.json();
+    return products;
   },
 );
 

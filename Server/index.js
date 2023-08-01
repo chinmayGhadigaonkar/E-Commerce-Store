@@ -20,7 +20,7 @@ const corsOptions ={
     credentials:true,            //access-control-allow-credentials:true
   }
 app.use(cors(corsOptions))
-// connection to db
+// connection to db 
 connection()
 
 app.use(express.json()) 

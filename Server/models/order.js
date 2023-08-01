@@ -4,7 +4,7 @@ const orderSchema = new mongoose.Schema(
   {
     shippingInfo: {
       address: {
-        type: String,
+        type: String,  
         required: true,
       },
       city: {
@@ -18,11 +18,12 @@ const orderSchema = new mongoose.Schema(
       country: {
         type: String,
         required: true,
+        default:"India" 
       },
       pinCode: {
         type: Number,
         required: true,
-      },
+      }, 
       phoneNo: {
         type: Number,
         required: true,

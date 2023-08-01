@@ -1,20 +1,19 @@
-import './App.css'
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Tshirt from './components/category/Tshirt'
 import Home from './Pages/Home';
 import Mugs from './components/category/Mugs';
-import Navbar from './components/Navbar'
+import Navbar from './components/common/Navbar'
+import Filter from './components/Filter/Filter'
 import Caps from './components/category/Caps';
-import Footer from './components/Footer';
+import Footer from './components/common/Footer';
 import SingleProductPage from './components/product/SingleProductPage';
 import Login from './Pages/Login'
 import Signup from './Pages/Signup';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { productFetch  } from './store/Slice/productSlice';
 import Checkout from './components/checkout/Checkout';
 import { cartFetch } from './store/Slice/cartSlice';
-import { useSelect } from '@material-tailwind/react';
 
 
 
@@ -23,9 +22,12 @@ function App() {
 
   const dispatch = useDispatch()
   // const {userInfo} = useSelect(state => state.userInfo)
+  const cart = useSelector(state=>state.cart)
+
   useEffect(()=>{
-    dispatch(productFetch())
     dispatch(cartFetch())
+    dispatch(productFetch())
+   
   },[])
 
   return (
@@ -33,6 +35,7 @@ function App() {
 
     <BrowserRouter>
         <Navbar/>
+        <Filter></Filter>
         <Routes>
           <Route path='/' element={<Home></Home>}></Route>
           <Route path='/Tshirt' element={<Tshirt></Tshirt>} ></Route>
@@ -42,8 +45,6 @@ function App() {
           <Route path='/login' element={<Login></Login>}></Route>
           <Route path='/signup' element={<Signup/>}></Route>
           <Route path='/checkout' element={<Checkout/>}></Route>
-
-        
         </Routes>
     
       <Footer></Footer>

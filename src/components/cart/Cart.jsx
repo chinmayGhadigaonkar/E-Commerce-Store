@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { ImCross } from "react-icons/im";
 import { useDispatch, useSelector } from "react-redux";
 import CartItem from "./CartItem";
-import {  clearCart } from "../../store/Slice/cartSlice";
+import { clearCart } from "../../store/Slice/cartSlice";
 import { VITE_BACKEND_URL } from "../../config";
 import { toast } from "react-hot-toast";
 import { Link } from "react-router-dom";
 
 const Cart = ({ setCart }) => {
   const { cartProduct, productTPrice } = useSelector((state) => state.cart);
-
   const dispatch = useDispatch();
 
   // const Products = dispatch(cartFetch)
@@ -39,7 +38,7 @@ const Cart = ({ setCart }) => {
 
   return (
     <>
-      <div className=" border-l-2 overflow-x-hidden">
+      <div className=" h-screen border-l-2 overflow-x-hidden">
         <h1 className=" text-center text-xl font-semibold p-7">Your Cart </h1>
 
         {cartProduct.map((product) => {
@@ -51,11 +50,13 @@ const Cart = ({ setCart }) => {
         </div>
         <div className="flex w-52 my-2 ml-4 ">
           <Link to="/checkout">
-          <button className="flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded">
-            Checkout
-          </button>
+            <button className="flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded">
+              Checkout
+            </button>
           </Link>
-          <button className="flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded" onClick={handleOnClearCart}>
+          <button
+            className="flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded"
+            onClick={handleOnClearCart}>
             Clear
           </button>
         </div>
