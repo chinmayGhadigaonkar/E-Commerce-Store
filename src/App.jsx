@@ -10,10 +10,12 @@ import SingleProductPage from './components/product/SingleProductPage';
 import Login from './Pages/Login'
 import Signup from './Pages/Signup';
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { productFetch  } from './store/Slice/productSlice';
 import Checkout from './components/checkout/Checkout';
 import { cartFetch } from './store/Slice/cartSlice';
+import AllProducts from "./Pages/AllProducts";
+import SearchPage from "./components/common/SearchPage";
 
 
 
@@ -21,23 +23,24 @@ import { cartFetch } from './store/Slice/cartSlice';
 function App() {
 
   const dispatch = useDispatch()
+
   // const {userInfo} = useSelect(state => state.userInfo)
   const cart = useSelector(state=>state.cart)
 
   useEffect(()=>{
-    dispatch(cartFetch())
     dispatch(productFetch())
-   
+    dispatch(cartFetch())
   },[])
 
+  
   return (
     <>
 
     <BrowserRouter>
         <Navbar/>
-        <Filter></Filter>
+       
         <Routes>
-          <Route path='/' element={<Home></Home>}></Route>
+          <Route path='/' element={<Home  ></Home>}  ></Route>
           <Route path='/Tshirt' element={<Tshirt></Tshirt>} ></Route>
           <Route path='/Mugs' element={<Mugs></Mugs>} ></Route>
           <Route path='/Caps' element={<Caps></Caps>}></Route>
@@ -45,6 +48,10 @@ function App() {
           <Route path='/login' element={<Login></Login>}></Route>
           <Route path='/signup' element={<Signup/>}></Route>
           <Route path='/checkout' element={<Checkout/>}></Route>
+          <Route path='/products' element={<AllProducts/>}></Route>
+          <Route path='/search' element={<SearchPage/>}></Route>
+
+        
         </Routes>
     
       <Footer></Footer>

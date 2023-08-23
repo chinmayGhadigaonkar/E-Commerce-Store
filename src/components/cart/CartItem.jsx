@@ -45,7 +45,7 @@ const CartItem = ({ product }) => {
         <img
           alt="ecommerce"
           className=" object-fill w-[80px] border-2 mx-2 h-[80px] "
-          src={product.img[0]}
+          src={product.img}
         />
         <h4 className="text-base  mt-2  w-52 font-semibold">{product.title}</h4>
       </div>
@@ -84,7 +84,7 @@ const CartItem = ({ product }) => {
           className="h-5 w-6 text-purple-500 cursor-pointer"
           onClick={() => {
             removeBtn(product);
-            deleteItem(product);
+           
           }}></BsTrashFill>
       </div>
     </div>

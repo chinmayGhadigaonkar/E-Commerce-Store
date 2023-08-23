@@ -9,16 +9,15 @@ const initialState = {
 const STATUSES ={
     IDLE : "idle",
     ERROR : "error",
-    LOADING : "loading"
+    LOADING : "loading" 
 }
 
-const productSlice= createSlice({
+const productSlice = createSlice({
     name : "products" ,
     initialState,
     extraReducers: (builder) => {
         builder
         .addCase(productFetch.pending, (state, action) => {
-            
             state.status = STATUSES.LOADING
           })
         .addCase(productFetch.fulfilled, (state, action) => {

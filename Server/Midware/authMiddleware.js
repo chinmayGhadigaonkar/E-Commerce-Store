@@ -6,7 +6,7 @@ const authMiddleware = async (req, res, next) => {
     const { token } = req.cookies;
     if (!token) {
         res.status(401).send({ error: "Please authenticate using a valid token" })
-    }
+    } 
     try {
         const decodeData = jwt.verify(token, process.env.JWT_SECRET)
         req.user = await User.findById(decodeData.id).select("-password");
@@ -14,7 +14,7 @@ const authMiddleware = async (req, res, next) => {
     }
     catch (error) {
         res.status(401).send({ error: "Something is Wrong " })
-    }
+    } 
 }
 
 
@@ -26,7 +26,7 @@ const authorizeRoles = (...roles) => {
         );
       }
   
-      next();
+      next(); 
     };
   };
 

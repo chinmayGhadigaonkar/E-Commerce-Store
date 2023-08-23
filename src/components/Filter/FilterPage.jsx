@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
-const FilterPage = () => {
+const FilterPage = ({filter}) => {
+
   return (
     <>
-      <div className=" border-2  px-3 py-3 absolute left-0 h-full">
+      <div className={`w-80  bg-purple-600  text-white px-3 py-10 absolute left-0 h-full transition-transform duration-500 ${filter ? ` -translate-x-[1000px] visible hidden ` : ` translate-x-0  `
+        }`}>
         <h5 className=" text-xl font-bold">Filter</h5>
         <div className="ml-5 my-3">
           <h6 className=" text-lg  font-semibold ">Category</h6>
-          <div className=" px-3 p-2  text-md text-black ">
+          <div className=" px-3 p-2  text-md text-white ">
             <input type="checkbox" className="" />
             <label htmlFor="" className="ml-1">
               T-shirts
@@ -36,7 +38,7 @@ const FilterPage = () => {
                 id=""
                 min={0}
                 max={100000}
-                className="w-52 bg-black  "
+                className="w-44 bg-white   "
               />
               <label htmlFor="" className="mx-1">
                 100000

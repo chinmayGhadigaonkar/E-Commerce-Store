@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import MultiImg from "./MultiImg";
-
-import { addToCart } from "../../store/Slice/cartSlice";
+import {  cartFetch } from "../../store/Slice/cartSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 import { VITE_BACKEND_URL } from "../../config";
+import { addToCart } from "../../store/Slice/cartSlice";
 
 const SingleProductPage = () => {
   const [product, setProduct] = useState([]);
@@ -16,11 +16,7 @@ const SingleProductPage = () => {
 
   const fetchdata = async () => {
     try {
-      const res = await fetch(
-        `${VITE_BACKEND_URL}/products/getproduct/${
-          location.pathname.split("/")[2]
-        }`,
-      );
+      const res = await fetch(`${VITE_BACKEND_URL}/products/getproduct/${location.pathname.split("/")[2]}`);
       const { product } = await res.json();
       setProduct(product);
       setProductImg(product[0].img);
@@ -46,6 +42,8 @@ const SingleProductPage = () => {
       });
 
       const {products}= await res.json();
+      console.log(products);
+    
     } catch {
         toast.error("Something Went's to Wrong")
     }
@@ -53,9 +51,12 @@ const SingleProductPage = () => {
 
   const handleOnCart = (product) => {
     if (localStorage.getItem("userInfo")) {
-        addCart(product)
+        // addCart(product)
+
         // console.log(product)
-      dispatch(addToCart(product));
+      // dispatch(addToCart(product));
+      dispatch(addToCart(product))
+
     } else {
       toast.error("Plz Login before add to cart");
     }

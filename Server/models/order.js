@@ -13,11 +13,11 @@ const orderSchema = new mongoose.Schema(
       },
       state: {
         type: String,
-        required: true,
-      },
+        required: true, 
+      }, 
       country: {
         type: String,
-        required: true,
+        required: true, 
         default:"India" 
       },
       pinCode: {

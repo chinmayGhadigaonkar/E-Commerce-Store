@@ -1,8 +1,8 @@
-import React from 'react'
+import React  , {useState}from 'react'
 import { Carousel } from "@material-tailwind/react";
 import Product from '../components/product/Product';
 import FilterPage from '../components/Filter/FilterPage';
-
+import Filter from '../components/Filter/Filter'
 import img1 from '../IMG/image1.avif'
 import img2 from '../IMG/img2.jpg'
 import img3 from '../IMG/image3.avif'
@@ -10,18 +10,20 @@ import img3 from '../IMG/image3.avif'
 
 
 const Home = () => {
+
+  
   return (
-    < >
-      <FilterPage></FilterPage>
+    <>
+     
       <div className='m-auto my-3 w-[60%] h-[60%]'>
         <Carousel className="rounded-xl">
           <img
-            src={img1}
+            src={img2}
             alt="image 1"
             className="h-full w-full object-cover"
           />
           <img
-            src={img2}
+            src={img1}
             alt="image 2"
             className="h-full w-full object-cover"
           />

@@ -51,7 +51,7 @@ router.post("/addtocart", authMiddleware, async (req, res) => {
       products: productsArray,
     });
 
-    res.status(200).json({
+    res.status(200).json({ 
       success: true,
       msg: "Added to the cart successfully",
       products: productsArray,
@@ -59,8 +59,7 @@ router.post("/addtocart", authMiddleware, async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: "Something went'to Wrong" });
   }
-});
-
+});  
 // delete Item cart
 router.delete("/deleteitem", authMiddleware, async (req, res) => {
   try {
