@@ -18,7 +18,7 @@ const cartSlice = createSlice({
     extraReducers: (builder) => {
       builder
       .addCase(cartFetch.fulfilled, (state, action) => {
-          console.log(action.payload)
+        
           state.cartProduct = action.payload;
           let total = 0;
           state.cartProduct.forEach((product) => {
@@ -35,32 +35,18 @@ const cartSlice = createSlice({
           state.status = STATUSES.LOADING;
         })
         .addCase(addToCart.fulfilled, (state, action) => {
-          let isExists = false;
-          const temp = action.payload
-     
-          // state.cartProduct.forEach((product) => {
-          //   if (product.title === temp.title) {
-          //     isExists = true;
-          //   }
-          // });
-          // console.log(temp[0].title);
+          let isExists = false;              
          
-          if (isExists) {
-            toast.error("Product is already in cart ");
-            return state;
-          } else {
             state.cartProduct=action.payload;
 
            let total=0;
             for (let index = 0; index < state.cartProduct.length; index++) {
               total += state.cartProduct[index].price
             }
-
             state.productTPrice= total
-     
             toast.success("Product added in cart successfully ");
             state.status = STATUSES.IDLE;
-          }
+        
          
         })
         .addCase(addToCart.rejected, (state, action) => {
@@ -84,10 +70,7 @@ const cartSlice = createSlice({
           state.status = STATUSES.LOADING;
         })
         .addCase(removeCart.fulfilled, (state, action) => {
-          // state.cartProduct = action.payload.products;
-          // state.productTPrice -= action.payload.price;
-          state.cartProduct = action.payload;
-          console.log(state.cartProduct);
+          state.cartProduct.pop( action.payload);
           let total=0;
             for (let index = 0; index < state.cartProduct.length; index++) {
               total += state.cartProduct[index].price
@@ -134,6 +117,10 @@ export const addToCart = createAsyncThunk(
     });
 
     const result = await res.json();
+    if(!result.success){
+      toast.error("Product is already in cart")
+      return
+    }
     return result.products;
   },
 );
@@ -166,54 +153,8 @@ export const removeCart = createAsyncThunk(
       }),
     });
   const {result} = await res.json();
-
-
     return result.products;
   },
 );
 export const {} = cartSlice.actions;
 export default cartSlice.reducer;
-
-// addToCart
-// addToCart(state, action) {
-//   let isExists = false;
-//   state.cartProduct.forEach((product) => {
-//     if (product.title === action.payload.title) {
-//       isExists = true;
-//     }
-//   });
-//   if (isExists) {
-//     toast.error("Product is already in cart ");
-//     return state;
-//   } else {
-//     state.cartProduct.push(action.payload);
-//     state.productTPrice += action.payload.price;
-//     toast.success("Product added in cart successfully ");
-//   }
-// },
-
-// clearCart(state, action) {
-//   (state.cartProduct = []), (state.productTPrice = 0);
-// },
-
-// removeCart(state, action) {
-//   const arr = state.cartProduct.filter(
-//     (item) => item.title !== action.payload.title,
-//   );
-//   toast.success("Item removed successfully");
-//   state.productTPrice -= action.payload.price;
-//   state.cartProduct = arr;
-// },
-
-
-          // const { products } = action.payload;
-
-          // if (!products) {
-          //   toast.error("Product is already in cart");
-          //   return;
-          // }
-
-          // state.cartProduct = products;
-
-          // state.productTPrice += products.price;
-          // toast.success("Product added in cart successfully ");

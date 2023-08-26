@@ -10,27 +10,7 @@ const CartItem = ({ product }) => {
   const [QuantityValue, setQuantityValue] = useState(1);
   const dispatch = useDispatch();
 
-  const deleteItem = async (product) => {
-    try {
-      // console.log(product)
 
-      console.log(product);
-      const res = await fetch(`${VITE_BACKEND_URL}/cart/deleteitem`, {
-        method: "DELETE",
-        headers: {
-          "content-type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({
-          products: product,
-        }),
-      });
-      const result = await res.json();
-      console.log(result);
-    } catch (e) {
-      console.log("Something went's wrong. Please try again");
-    }
-  };
 
   const removeBtn = (product) => {
     dispatch(removeCart(product));
@@ -39,8 +19,7 @@ const CartItem = ({ product }) => {
 
   return (
     <div
-      className="img flex ml-2 justify-between items-center"
-      key={product._id}>
+      className="img flex ml-2 justify-between items-center">
       <div className=" flex ">
         <img
           alt="ecommerce"
@@ -54,32 +33,33 @@ const CartItem = ({ product }) => {
           Price:- {product.price}
         </p>
       </div>
-      <div className="  space-x-3 mr-3  flex  ">
-        <AiFillMinusCircle
+      {/* <div className="  space-x-3 mr-3  flex  "> */}
+        {/* <AiFillMinusCircle
           className="my-1 text-purple-500 cursor-pointer text-lg  "
           onClick={() => {
             if (QuantityValue > 1) {
               setQuantityValue((prev) => prev - 1);
             }
           }}
-        />
-        <span className="mx-2">
+        /> */}
+        {/* <span className="mx-2">
+          <p>Quantity</p>
           <input
             type="text"
             value={QuantityValue}
             readOnly
             style={{ width: "25px", border: "2px white" }}
           />
-        </span>
-        <AiFillPlusCircle
+        </span> */}
+        {/* <AiFillPlusCircle
           className="my-1 text-purple-500  cursor-pointer  text-lg "
           onClick={() => {
             if (QuantityValue < product.availableQty) {
               setQuantityValue((prev) => prev + 1);
             }
-          }}></AiFillPlusCircle>
-      </div>
-      <div className="mr-3 ">
+          }}></AiFillPlusCircle> */}
+      {/* </div> */}
+      <div className="mr-1 ">
         <BsTrashFill
           className="h-5 w-6 text-purple-500 cursor-pointer"
           onClick={() => {

@@ -123,7 +123,7 @@ router.put('/updatepassword', authMiddleware, async (req, res) => {
 
         user.password = req.body.newPassword;
         await user.save()
-        setCookie(user, 200, res)
+         setCookie(user, 200, res)
     }
     catch (e) {
         res.status(500).json({ error: "Internal Error " })
@@ -137,7 +137,7 @@ router.put('/updatepassword', authMiddleware, async (req, res) => {
 router.get("/admin/getallusers", authMiddleware, authorizeRoles(true), async (req, res) => {
     try {
         const users = await User.find().select("-password");
-        res.status(200).json({ success: true, users })
+        return res.status(200).json({ success: true, users })
     }
     catch (e) {
         res.status(400).json({ e: "Internal Server error" })
@@ -148,7 +148,9 @@ router.get("/admin/getallusers", authMiddleware, authorizeRoles(true), async (re
 router.get("/admin/getoneuser/:id", authMiddleware, authorizeRoles(true), async (req, res) => {
     try {
         const user = await User.findById(req.params.id).select("-password");
-        res.status(200).json({ success: true, user })
+     
+     
+       res.status(200).json({ success: true, user })
     }
     catch (e) {
         res.status(400).json({ e: "Internal Server error" })

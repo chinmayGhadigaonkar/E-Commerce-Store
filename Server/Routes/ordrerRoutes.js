@@ -10,7 +10,7 @@ const router = Router()
 router.get("/getOrder",authMiddleware,authorizeRoles(true),async (req,res)=>{
     try{
         const order = await Order.find()
-        res.status(200).json({order})
+      res.status(200).json({order})
     }
     catch(e){
         res.status(400).json("Order Not Found")
@@ -23,7 +23,7 @@ router.get("/getOrder",authMiddleware,authorizeRoles(true),async (req,res)=>{
 router.post("/placeOrder", authMiddleware , async(req ,res )=>{
     try{
         const order = await Order.create(req.body)
-        res.status(200).json({order})
+      res.status(200).json({order})
     }
     catch(e){
         res.status(400).json("Order Not Place")
@@ -39,11 +39,11 @@ router.put("/updateOrder/:id", authMiddleware , async(req,res)=>{
         const query = req.body
         let order = await Order.findById(req.params.id)
         if(!order){
-            res.status(200).json("Order Not Found ")
+            return res.status(200).json("Order Not Found ")
         }
 
         order = await Order.findByIdAndUpdate(req.params.id , {$set : query } , {new : true} )
-        res.status(200).json({order})
+         res.status(200).json({order})
     }
     catch(e){
         res.status(400).json("Order Not Place")
@@ -57,7 +57,7 @@ router.delete("/deleteOrder/:id", authMiddleware , async(req,res)=>{
         
         const order = await Order.findByIdAndDelete(req.params.id  )
         if(!order){
-            res.status(200).json("Order Not Found ")
+            return res.status(200).json("Order Not Found ")
         }
         res.status(200).json({success : true})
     }
