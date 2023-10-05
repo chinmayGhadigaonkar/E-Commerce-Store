@@ -4,16 +4,16 @@ const ShippingInfo = () => {
   const handleChange = () => {};
   return (
     <>
-      
+      <h1 className=" text-2xl ml-5 mt-1 ">Chinmay Ghadigaonkar </h1>
      
-      <section className="text-gray-600 body-font relative border-2 h-[32rem] border-black w-3/5 ">
+      <section className="text-gray-600 body-font relative">
         <div className="  py-8 ">
-          <div className="flex flex-col text-center w-full mb-8">
+          <div className="flex flex-col text-center w-full mb-12">
             <h1 className="text-2xl font-semibold  text-gray-900  my-2">
               Add Details
             </h1>
           </div>
-          <div className="lg:w-3/3 md:w-3/3   mx-auto">
+          <div className="lg:w-2/3 md:w-3/3  mx-auto">
             <div className="flex flex-col justify-center items-center flex-wrap -m-2">
               <div className="  flex  justify-between p-2 md:w-5/6 space-x-5 w-4/5 ">
                 <div className="w-[23rem]">
@@ -105,11 +105,11 @@ const ShippingInfo = () => {
                required    />
                 </div>
               </div>
-              {/* <div className="p-2 w-full">
+              <div className="p-2 w-full">
                 <button className="flex mx-auto text-white bg-purple-500 border-0 py-2 px-8 focus:outline-none hover:bg-purple-600 rounded text-lg">
                   Proceed
                 </button>
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

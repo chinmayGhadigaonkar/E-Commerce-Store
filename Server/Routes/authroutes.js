@@ -21,8 +21,7 @@ router.post("/createuser", body("name", "Enter valid name").isLength({ min: 3 })
             let success = false
             const errors = validationResult(req);
             if (!errors.isEmpty()) {
-               res.status(400).json({success ,msg: "All field require to filled" });
-               return
+                return res.status(400).json({success ,msg: "All field require to filled" });
             }
 
 
@@ -57,8 +56,7 @@ router.post('/login', [
     if (!errors.isEmpty()) {
 
 
-     res.status(400).json({ msg: "email or password cannot be blank" });
-     return
+        return res.status(400).json({ msg: "email or password cannot be blank" });
     }
 
     const { email, password } = req.body
@@ -66,14 +64,12 @@ router.post('/login', [
         let user = await User.findOne({ email })
         if (!user) {
 
-            res.json({ success, msg: "please try to login with valid credential" });
-            return 
+            return res.json({ success, msg: "please try to login with valid credential" });
         }
         const comparepassword = await bcrypt.compare(password, user.password);
         if (!comparepassword) {
 
-           res.json({ success, msg: "please try to login with valid credential" });
-           return
+            return res.json({ success, msg: "please try to login with valid credential" });
         }
         success = true;
         setCookie(user, 201, res)
@@ -119,12 +115,10 @@ router.put('/updatepassword', authMiddleware, async (req, res) => {
 
         if (!ispasswordMatch) {
             res.status(400).json({ error: "old password does not match" })
-            return
         }
 
         if (req.body.newPassword !== req.body.confirmPassword) {
             res.status(400).json({ error: "password does not match" })
-            return
         }
 
         user.password = req.body.newPassword;
@@ -175,7 +169,6 @@ router.put("/admin/updateuser/:id", authMiddleware, authorizeRoles(true), async 
 
         if (!user) {
             res.json("No user of this id")
-            return
         }
 
         user = await User.findByIdAndUpdate(req.params.id, { $set: query }, { new: true }).select("-password")
@@ -196,7 +189,6 @@ router.delete("/admin/deleteuser/:id", authMiddleware, authorizeRoles(true), asy
 
         if (!user) {
             res.json("No user of this id")
-            return
         }
 
         res.status(200).json({ success: true, msg: " Delete user successfully  " })

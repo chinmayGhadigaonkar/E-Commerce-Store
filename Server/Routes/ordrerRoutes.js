@@ -39,8 +39,7 @@ router.put("/updateOrder/:id", authMiddleware , async(req,res)=>{
         const query = req.body
         let order = await Order.findById(req.params.id)
         if(!order){
-             res.status(200).json("Order Not Found ")
-             return
+            return res.status(200).json("Order Not Found ")
         }
 
         order = await Order.findByIdAndUpdate(req.params.id , {$set : query } , {new : true} )
@@ -58,8 +57,7 @@ router.delete("/deleteOrder/:id", authMiddleware , async(req,res)=>{
         
         const order = await Order.findByIdAndDelete(req.params.id  )
         if(!order){
-             res.status(200).json("Order Not Found ")
-             return
+            return res.status(200).json("Order Not Found ")
         }
         res.status(200).json({success : true})
     }

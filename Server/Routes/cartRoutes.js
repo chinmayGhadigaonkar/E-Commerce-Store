@@ -10,8 +10,7 @@ router.get("/getcart", authMiddleware, async (req, res) => {
     const cart = await Cart.findOne({ user: _id });
 
     if (!cart) {
-       res.status(400).json("cart does not exist");
-       return
+      return res.status(400).json("cart does not exist");
     }
     res.status(200).json({ success: true, products: cart.products });
   } catch (e) {
@@ -72,8 +71,7 @@ router.delete("/deleteitem", authMiddleware, async (req, res) => {
 
     const cart = await Cart.findOne({ user: _id });
     if (!cart) {
-      res.status(404).json({ success: false, error: "Cart is not found" });
-      return
+     return res.status(404).json({ success: false, error: "Cart is not found" });
     }
 
     const productsArray = cart.products;
@@ -98,8 +96,7 @@ router.delete("/clearcart", authMiddleware, async (req, res) => {
     const cart = await Cart.findOne({ user: _id });
 
     if (!cart) {
-       res.status(400).json({success: false, error:"cart does not exist"});
-       return
+      return res.status(400).json({success: false, error:"cart does not exist"});
     }
 
     const result = await Cart.findByIdAndUpdate(cart._id,{products:[]});

@@ -6,15 +6,14 @@ import { BsFilterRight } from "react-icons/bs";
 import FilterPage from "../components/Filter/FilterPage";
 const AllProducts = () => {
   const { products } = useSelector((state) => state.products);
-  const [filterBtn, setFilterBtn] = useState(true);
-
-  
+  const [filter, setFilter] = useState(false);
+  console.log(filter);
   return (
     <>
     
-        <FilterPage filter={filterBtn}></FilterPage>
+        <FilterPage filter={filter}></FilterPage>
       
-      <Filter setFilter={setFilterBtn}></Filter>
+      <Filter setFilter={setFilter}></Filter>
       <section className="text-gray-900 body-font">
         <div className="container text-center mt-16 ">
           <h1 className="text-2xl font-semibold  text-gray-900  my-2">
