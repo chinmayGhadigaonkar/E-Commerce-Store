@@ -4,7 +4,10 @@ import { Link, useLocation } from "react-router-dom";
 const SearchPage = () => {
   const location = useLocation();
   const { products } = location.state;
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of a4dff47 (Revert "filter working")
  
   return (
     <>
