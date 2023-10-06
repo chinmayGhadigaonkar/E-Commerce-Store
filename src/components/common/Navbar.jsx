@@ -47,7 +47,7 @@ const Navbar = () => {
 
   const productSearch = async(e)=>{
     try {
-      const res = await fetch(`${VITE_BACKEND_URL}/search?query=${query}`, {
+      const res = await fetch(`${VITE_BACKEND_URL}/search/?query=${query}`, {
         method: "GET",
         headers: {
           "content-type": "application/json",
@@ -85,7 +85,7 @@ const Navbar = () => {
   }
   return (
     <>
-      <div className="sm:h-28 h-32    shadow-md  flex flex-col overflow-hidden-x md:flex-row w-[100%] justify-between items-center  ">
+      <div className="sm:h-28 h-32  shadow-md  flex flex-col overflow-hidden-x md:flex-row w-[100%] justify-between items-center  z-30  ">
         <div className="logo md:order-1 flex  justify-between md:w-[60vw] w-[100vw] order-1   items-center ">
           <Link to="/">
             <h1 className=" ml-2 text-center font-bold text-2xl py-6 text-purple-500 cursor-pointer ">

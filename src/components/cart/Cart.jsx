@@ -19,7 +19,7 @@ const Cart = ({ setCart }) => {
 
   return (
     <>
-      <div className=" h-[100vh] z-40 border-l-2 overflow-x-hidden">
+      <div className=" h-[100vh] bg-white z-50 border-l-2 overflow-x-hidden">
         <h1 className=" text-center text-xl font-semibold p-7">Your Cart </h1>
 
         {cartProduct.map((product) => {
