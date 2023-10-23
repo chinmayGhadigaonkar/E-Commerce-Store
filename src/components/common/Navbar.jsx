@@ -61,7 +61,7 @@ const Navbar = () => {
 
   const productSearch = async (e) => {
     try {
-      const res = await fetch(`${VITE_BACKEND_URL}/search/?query=${query}`, {
+      const res = await fetch(`${VITE_BACKEND_URL}/filter/search/?query=${query}`, {
         method: "GET",
         headers: {
           "content-type": "application/json",
@@ -112,7 +112,7 @@ const Navbar = () => {
         </div>
 
         <div
-          className={` z-50 opacity-[1] shadow-md md:shadow-none py-5 order-3 flex md:order-2  md:justify-end mx-4 font-bold text-center w-[100%] md:w-[80%] md:h-20 h-72 bg-white list-none space-x-4  transition-transform duration-200 md:translate-x-0 ${
+          className={` z-50 opacity-[1] shadow-md md:shadow-none py-5 order-3 flex md:order-2  md:justify-end mx-4 font-bold text-center w-[100%] md:w-[100%] md:h-20 h-72 bg-white list-none space-x-4  transition-transform duration-200 md:translate-x-0 ${
             show
               ? "translate-x-0 md:flex-row flex-col "
               : "translate-x-[1000px]  "
@@ -169,7 +169,7 @@ const Navbar = () => {
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
                   onClick={handleClick}>
-                  Dashboard
+                 Accounts
                 </ColorButton>
                 <Menu
                   id="fade-menu"
@@ -181,7 +181,7 @@ const Navbar = () => {
                   onClose={handleClose}
                   TransitionComponent={Fade}>
                   <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={handleClose}>My account</MenuItem>
+                  <MenuItem onClick={()=>navigate("/wishlist")}>WishList</MenuItem>
                   <MenuItem onClick={handleClose}>
                     <Link to="/">
                       {/* <BiLogOut  className="text-purple-500 border-2 h-5 text-xl  cursor-pointer  "/> */}

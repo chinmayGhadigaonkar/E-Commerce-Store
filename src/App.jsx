@@ -16,7 +16,7 @@ import Checkout from './components/checkout/Checkout';
 import { cartFetch } from './store/Slice/cartSlice';
 import AllProducts from "./Pages/AllProducts";
 import SearchPage from "./components/common/SearchPage";
-
+import WishList from "./components/wishList/wishList";
 
 
 
@@ -32,7 +32,7 @@ function App() {
     dispatch(cartFetch())
   },[])
 
-  
+
   return (
     <>
 
@@ -41,15 +41,16 @@ function App() {
        
         <Routes>
           <Route path='/' element={<Home  ></Home>}  ></Route>
-          <Route path='/Tshirt' element={<Tshirt></Tshirt>} ></Route>
-          <Route path='/Mugs' element={<Mugs></Mugs>} ></Route>
-          <Route path='/Caps' element={<Caps></Caps>}></Route>
+          <Route path='/Tshirt' element={<AllProducts category="T-shirt" ></AllProducts>} ></Route>
+          <Route path='/Mugs' element={<AllProducts category="Mugs" ></AllProducts>} ></Route>
+          <Route path='/Caps' element={<AllProducts category="Caps" ></AllProducts>}></Route>
           <Route path='/product/:slug' element={<SingleProductPage></SingleProductPage>}></Route>
           <Route path='/login' element={<Login></Login>}></Route>
           <Route path='/signup' element={<Signup/>}></Route>
           <Route path='/checkout' element={<Checkout/>}></Route>
           <Route path='/products' element={<AllProducts />}></Route>
           <Route path='/search' element={<SearchPage/>}></Route>
+          <Route path="/wishList" element={<WishList/>}></Route>
 
         
         </Routes>

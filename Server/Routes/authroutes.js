@@ -7,6 +7,7 @@ import User from "../models/user.js"
 import setCookie from "../utills/storetoken.js";
 import { authMiddleware, authorizeRoles } from "../Midware/authMiddleware.js";
 import Cart from "../models/cart.js";
+import WishlistItem from "../models/wishlist.js";
 
 
 const router = Router()
@@ -37,6 +38,7 @@ router.post("/createuser", body("name", "Enter valid name").isLength({ min: 3 })
             })
 
             const cart = await Cart.create({user: user._id})
+            
             setCookie(user, 201, res)
         }
         catch (e) {

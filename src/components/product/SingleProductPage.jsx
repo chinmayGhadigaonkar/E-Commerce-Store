@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 import { VITE_BACKEND_URL } from "../../config";
 import { addToCart } from "../../store/Slice/cartSlice";
+import { AiOutlineHeart ,AiFillHeart } from "react-icons/ai";
 
 const SingleProductPage = () => {
   const [product, setProduct] = useState([]);
@@ -79,6 +80,9 @@ const SingleProductPage = () => {
             key={p._id}
             className="text-gray-600 body-font overflow-hidden">
             <div className="container px-5 py-24 mx-auto">
+              <div>
+              <AiOutlineHeart  className='w-10 h-10  text-purple-500 border-none cursor-pointer ml-auto '/>
+              </div>
               <div className="lg:w-4/5 mx-auto flex flex-col justify-center items-center ">
                 <div className="w-full">
                   <img alt="ecommerce" className="lg:w-1/2  mx-auto w-full lg:h-1/3 h-[100%] object-cover object-center rounded" src={!changeIMG?p.img:changeIMG}  />
@@ -180,6 +184,11 @@ const SingleProductPage = () => {
                     <span className="title-font font-medium text-2xl text-gray-900">
                       ₹{p.price}
                     </span>
+                    <div>
+
+
+                    </div>
+
                     <button
                       className="flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded"
                       onClick={() => {
@@ -187,6 +196,7 @@ const SingleProductPage = () => {
                       }}>
                       Add To Cart
                     </button>
+
                   </div>
                 </div>
               </div>

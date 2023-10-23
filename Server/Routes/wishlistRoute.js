@@ -10,6 +10,12 @@ router.post('/add', authMiddleware, async (req, res) => {
     const { productId } = req.body; // Assuming you provide the productId in the request body
     const userId = req.user.id; // Get the authenticated user's ID from the middleware
 
+
+    const existingWishlistItem = await WishlistItem.findOne({ user: userId,product: productId });
+    if (existingWishlistItem) {
+      // The product is already in the wishlist
+      return res.status(400).json({ message: 'Product is already in the wishlist.' });
+    }
     // Create a new WishlistItem document
     const newWishlistItem = new WishlistItem({
       user: userId, // Use the authenticated user's ObjectId
@@ -17,9 +23,9 @@ router.post('/add', authMiddleware, async (req, res) => {
     });
 
     // Save the new wishlist item to the database
-    await newWishlistItem.save();
+    const product= await newWishlistItem.save();
 
-    res.status(201).json({ message: 'Item added to wishlist.' });
+    res.status(201).json({ message: 'Item added to wishlist.'  });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: 'Internal Server Error' });
@@ -51,12 +57,12 @@ router.delete("/delete/:_itemId", authMiddleware,async (req, res) => {
     const _itemId = req.params._itemId;
     
 
-    const deletedItem= await WishlistItem.findOneAndRemove({_id:_itemId ,user:userId});
+    const deletedItem= await WishlistItem.findOneAndRemove({product:_itemId ,user:userId});
 
     if (!deletedItem) {
       return res.status(404).json({ message: 'Wishlist item not found.' });
     }
-    res.json({ message: 'Item removed from wishlist.' });
+    res.json({ message: 'Item removed from wishlist.' ,deletedItem });
   } catch (err) {
     
     res.status(500).json({ error: 'Internal Server Error' });

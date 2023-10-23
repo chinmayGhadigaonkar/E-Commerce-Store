@@ -70,7 +70,7 @@ const cartSlice = createSlice({
           state.status = STATUSES.LOADING;
         })
         .addCase(removeCart.fulfilled, (state, action) => {
-          state.cartProduct.pop( action.payload);
+          state.cartProduct.pop(action.payload);
           let total=0;
             for (let index = 0; index < state.cartProduct.length; index++) {
               total += state.cartProduct[index].price

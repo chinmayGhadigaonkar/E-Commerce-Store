@@ -30,6 +30,25 @@ router.get("/products", async(req,res)=>{
   
 })
 
+// Category wise product
+router.get("/products/:category", async(req,res)=>{
+  try{
+    const  category  = req.params.category;
+  const products = await Product.find({category});
+  
+  if (products.length === 0) {
+    res.status(404).json({ message: 'No products found matching the criteria.' });
+  } else {
+    res.json({products :products});
+  }
+
+  }catch(error){
+    res.status(500).json({ error: 'Internal Server Error' });
+
+  }
+  
+})
+
 
 //  pagination 
 router.get('/pagination',async(req, res)=>{
@@ -63,7 +82,7 @@ router.get('/pagination',async(req, res)=>{
 
 // Search Engine
 router.get('/search',async (req, res) => {
-  const query = req.query.query;
+  const {query} = req.query;
 
   if(query==""){
      res.status(400).json({success:false,message : "Please Enter a product name before Search"});
@@ -79,8 +98,10 @@ router.get('/search',async (req, res) => {
       if(!products){
         res.status(400).json({success:false});
       }    
+      
       res.status(200).json({success:true, products});
     } catch (error) {
+     
       res.status(500).json({ error: 'Internal server error' });
     } 
   }

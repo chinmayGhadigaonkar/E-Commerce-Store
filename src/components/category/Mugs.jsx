@@ -1,11 +1,11 @@
-import React from 'react'
+import React ,{useState}from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { filterProducts } from '../../utils/filterProducts'
-
+import { AiOutlineHeart ,AiFillHeart } from "react-icons/ai";
 const Mugs = () => {
   const { products } = useSelector(state => state.products)
-
+  const [fill ,setFill]=useState(false)
   const filterProduct  = filterProducts(products , "Mugs")
   return (
     <>
@@ -31,9 +31,17 @@ const Mugs = () => {
                         <div className="mt-4">
                           <h3 className="text-gray-500 text-sm tracking-widest title-font mb-1">{product.category}</h3>
                           <h2 className="text-gray-900 title-font text-sm   font-medium">{product.title}</h2>
-                          <p className="mt-1">₹ {product.price}</p>
+                          
                         </div>
                       </Link>
+                      <div className='flex'>
+                          <p className="mt-1">₹ {product.price}</p>
+                          {
+                            fill?
+                           <AiOutlineHeart onClick={()=>{setFill(false)}} className='w-6 h-6  text-purple-500 border-none cursor-pointer ml-auto '/> :
+                           <AiFillHeart  onClick={()=>{setFill(true)}} className='w-6 h-6  text-purple-500 border-none cursor-pointer ml-auto '/>
+                          }
+                          </div>
                     </div>
 
                 )

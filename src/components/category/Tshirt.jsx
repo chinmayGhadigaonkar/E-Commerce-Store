@@ -1,16 +1,46 @@
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux'
+import React, { useEffect ,useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { filterProducts } from '../../utils/filterProducts'
+import { AiOutlineHeart ,AiFillHeart } from "react-icons/ai";
+import { AddToWishList } from '../../store/Slice/wishListSlice';
+import toast from 'react-hot-toast';
 
 
 const Tshirt = () => {
   const  {products}  = useSelector(state => state.products)
+  const [favorite ,setFavorite]=useState(false)
   // console.log(product);
   const filterProduct  = filterProducts(products , "T-shirt")
 
+  const wishlistProducts = useSelector((state) => state.wishList.products);
+
+  const status = useSelector((state) => state.wishList.status);
+  const wishList = wishlistProducts.map((item) => item.product);
+
+  const dispatch = useDispatch()
+  const handleOnRemoveWishList=()=>{
+    
+  }
+
+  const handleOnAddWishList=(_id)=>{
+    
+      dispatch(AddToWishList(_id));
+      toast.success("Item is add in your WishList")
+      setFavorite(true)
+    
   
+  }
  
+
+  useEffect(()=>{
+    wishList?.forEach(item=>{
+      if(item.product.name === filterProduct.name){
+        setFavorite(true)
+      }
+    })
+  },[])
+
   return (
     <>
       <section className="text-gray-900 body-font">
@@ -34,9 +64,18 @@ const Tshirt = () => {
                         <div className="mt-4">
                           <h3 className="text-gray-500 text-sm tracking-widest title-font mb-1">{product.category}</h3>
                           <h2 className="text-gray-900 title-font text-sm font-medium">{product.title}</h2>
-                          <p className="mt-1">₹ {product.price}</p>
+                          {/* <p className="mt-1">₹ {product.price}</p> */}
                         </div>
                       </Link>
+                      <div className='flex'>
+                          <p className="mt-1">₹ {product.price}</p>
+                          {
+                           favorite? 
+                          
+                           <AiFillHeart  onClick={()=>{handleOnAddWishList(product._id)}} className='w-6 h-6  text-purple-500 border-none cursor-pointer ml-auto '/>:
+                           <AiOutlineHeart onClick={()=>{handleOnRemoveWishList()}} className='w-6 h-6  text-purple-500 border-none cursor-pointer ml-auto '/>  
+                          }
+                       </div>
                     </div>
 
                 )
