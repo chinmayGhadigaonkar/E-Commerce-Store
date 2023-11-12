@@ -1,18 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { VITE_BACKEND_URL } from "../../config";
 import { ImCross } from "react-icons/im";
-const FilterPage = ({ filterBtn , setFilter}) => {
-  const [rangeValue, setRangeValue] = useState(0);
-  const [category, setCategory] = useState("");
 
-  const handleCategoryChange = (selectedCategory ) => {
-    setCategory(selectedCategory);
+const FilterPage = ({ filterBtn, setFilter }) => {
+  const [rangeValue, setRangeValue] = useState(0);
+  const [selectedCategories, setSelectedCategories] = useState([]);
+
+  const handleCategoryChange = (category) => {
+    // Toggle the selected category in the state
+    if (selectedCategories.includes(category)) {
+      setSelectedCategories(selectedCategories.filter((cat) => cat !== category));
+    } else {
+      setSelectedCategories([...selectedCategories, category]);
+    }
   };
 
   const fetchData = async () => {
     try {
+      const categoryQuery = selectedCategories.join(",");
       const res = await fetch(
-        `${VITE_BACKEND_URL}/filter/products?category=${category}&minPrice=0&maxPrice=${rangeValue}`,
+        `${VITE_BACKEND_URL}/filter/products?category=${categoryQuery}&minPrice=0&maxPrice=${rangeValue}`,
         {
           method: "GET",
           headers: {
@@ -24,7 +31,7 @@ const FilterPage = ({ filterBtn , setFilter}) => {
 
       if (res.ok) {
         const data = await res.json();
-      
+        console.log(data);
         // Handle the fetched data as needed
       } else {
         console.error("Failed to fetch data from the server");
@@ -34,10 +41,12 @@ const FilterPage = ({ filterBtn , setFilter}) => {
     }
   };
 
+  useEffect(() => {
+    fetchData();
+  }, [selectedCategories, rangeValue]);
 
   return (
     <>
-  
       <div
         className={`w-80 bg-purple-600 text-white px-3 py-10 absolute left-0 h-[100vh] z-50 transition-transform duration-500 ${
           filterBtn
@@ -45,9 +54,10 @@ const FilterPage = ({ filterBtn , setFilter}) => {
             : ` translate-x-0 `
         }`}
       >
-        <ImCross 
+        <ImCross
           onClick={() => setFilter(true)}
-          className="absolute right-4 top-8 text-lg text-white cursor-pointer "  ></ImCross>
+          className="absolute right-4 top-8 text-lg text-white cursor-pointer "
+        />
         <h5 className="text-xl font-bold">Filter</h5>
         <div className="ml-5 my-3">
           <h6 className="text-lg font-semibold">Category</h6>
@@ -56,7 +66,8 @@ const FilterPage = ({ filterBtn , setFilter}) => {
               type="checkbox"
               name="category"
               value="T-shirts"
-              onChange={() => handleCategoryChange("T-shirts")}
+              onChange={() => handleCategoryChange("T-shirt")}
+              checked={selectedCategories.includes("T-shirt")}
             />
             <label htmlFor="" className="ml-1 cursor-pointer">
               T-shirts
@@ -67,6 +78,7 @@ const FilterPage = ({ filterBtn , setFilter}) => {
               value="Mugs"
               name="category"
               onChange={() => handleCategoryChange("Mugs")}
+              checked={selectedCategories.includes("Mugs")}
             />
             <label htmlFor="" className="ml-1 cursor-pointer">
               Mugs
@@ -77,6 +89,7 @@ const FilterPage = ({ filterBtn , setFilter}) => {
               value="Caps"
               name="category"
               onChange={() => handleCategoryChange("Caps")}
+              checked={selectedCategories.includes("Caps")}
             />
             <label htmlFor="" className="ml-1 cursor-pointer">
               Caps
@@ -92,7 +105,6 @@ const FilterPage = ({ filterBtn , setFilter}) => {
               <label htmlFor="" className="mx-1">
                 0
               </label>
-
               <input
                 type="range"
                 min={0}
@@ -106,7 +118,6 @@ const FilterPage = ({ filterBtn , setFilter}) => {
               </label>
             </div>
           </div>
-          <button className=" border-2 w-36 h-10  my-3" onClick={fetchData}>Apply Filters</button>
         </div>
       </div>
     </>

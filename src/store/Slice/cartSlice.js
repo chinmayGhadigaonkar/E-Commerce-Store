@@ -15,81 +15,75 @@ const cartSlice = createSlice({
     productTPrice: 0,
     status: "idle",
   },
-    extraReducers: (builder) => {
-      builder
+  extraReducers: (builder) => {
+    builder
       .addCase(cartFetch.fulfilled, (state, action) => {
-        
-          state.cartProduct = action.payload;
-          let total = 0;
-          state.cartProduct.forEach((product) => {
-            total += product.price;
-          });
-          state.productTPrice = total;
-          state.status = STATUSES.IDLE;
-        })
-        .addCase(cartFetch.rejected, (state, action) => {
-          state.status = STATUSES.ERROR;
-        })
+        state.cartProduct = action.payload;
+        let total = 0;
+        state.cartProduct.forEach((product) => {
+          total += product.price;
+        });
+        state.productTPrice = total;
+        state.status = STATUSES.IDLE;
+      })
+      .addCase(cartFetch.rejected, (state, action) => {
+        state.status = STATUSES.ERROR;
+      })
 
-        .addCase(addToCart.pending, (state, action) => {
-          state.status = STATUSES.LOADING;
-        })
-        .addCase(addToCart.fulfilled, (state, action) => {
-          let isExists = false;              
-         
-            state.cartProduct=action.payload;
+      .addCase(addToCart.pending, (state, action) => {
+        state.status = STATUSES.LOADING;
+      })
+      .addCase(addToCart.fulfilled, (state, action) => {
+        let isExists = false;
 
-           let total=0;
-            for (let index = 0; index < state.cartProduct.length; index++) {
-              total += state.cartProduct[index].price
-            }
-            state.productTPrice= total
-            toast.success("Product added in cart successfully ");
-            state.status = STATUSES.IDLE;
-        
-         
-        })
-        .addCase(addToCart.rejected, (state, action) => {
-          state.status = STATUSES.ERROR;
-        })
-        .addCase(clearCart.pending, (state, action) => {
-          state.status = STATUSES.LOADING;
-        })
-        .addCase(clearCart.fulfilled, (state, action) => {
-          state.cartProduct =[];
-          state.productTPrice=0;
-          state.status = STATUSES.IDLE;
-        })
-        .addCase(clearCart.rejected, (state, action) => {
-          state.status = STATUSES.ERROR;
-        })
+        state.cartProduct = action.payload;
 
+        let total = 0;
+        for (let index = 0; index < state.cartProduct.length; index++) {
+          total += state.cartProduct[index].price;
+        }
+        state.productTPrice = total;
+        toast.success("Product added in cart successfully ");
+        state.status = STATUSES.IDLE;
+      })
+      .addCase(addToCart.rejected, (state, action) => {
+        state.status = STATUSES.ERROR;
+      })
+      .addCase(clearCart.pending, (state, action) => {
+        state.status = STATUSES.LOADING;
+      })
+      .addCase(clearCart.fulfilled, (state, action) => {
+        state.cartProduct = [];
+        state.productTPrice = 0;
+        state.status = STATUSES.IDLE;
+      })
+      .addCase(clearCart.rejected, (state, action) => {
+        state.status = STATUSES.ERROR;
+      })
 
-
-        .addCase(removeCart.pending, (state, action) => {
-          state.status = STATUSES.LOADING;
-        })
-        .addCase(removeCart.fulfilled, (state, action) => {
-          state.cartProduct.pop(action.payload);
-          let total=0;
-            for (let index = 0; index < state.cartProduct.length; index++) {
-              total += state.cartProduct[index].price
-            }
-              state.productTPrice = total;
-              
-              toast.success("Item removed successfully");
-          state.status = STATUSES.IDLE;
-        })
-        .addCase(removeCart.rejected, (state, action) => {
-          state.status = STATUSES.ERROR;
-        })
-    },
+      .addCase(removeCart.pending, (state, action) => {
+        state.status = STATUSES.LOADING;
+      })
+      .addCase(removeCart.fulfilled, (state, action) => {       
+        state.cartProduct= action.payload
+        let total = 0;
+        for (let index = 0; index < state.cartProduct.length; index++) {
+          total += state.cartProduct[index].price;
+        }
+        state.productTPrice = total;
+        toast.success("Item removed successfully");
+        state.status = STATUSES.IDLE;
+      })
+      .addCase(removeCart.rejected, (state, action) => {
+        state.status = STATUSES.ERROR;
+      });
+  },
 });
 
 export const cartFetch = createAsyncThunk(
   "fetch/allcartproduct",
   async (state, action) => {
-    console.log("fetch cart product")
+    console.log("fetch cart product");
     const res = await fetch(`${VITE_BACKEND_URL}/cart/getcart`, {
       headers: {
         "content-type": "application/json",
@@ -117,9 +111,9 @@ export const addToCart = createAsyncThunk(
     });
 
     const result = await res.json();
-    if(!result.success){
-      toast.error("Product is already in cart")
-      return
+    if (!result.success) {
+      toast.error("Product is already in cart");
+      return;
     }
     return result.products;
   },
@@ -152,8 +146,8 @@ export const removeCart = createAsyncThunk(
         products: product,
       }),
     });
-  const {result} = await res.json();
-    return result.products;
+    const { cart } = await res.json();
+    return cart.products;
   },
 );
 export const {} = cartSlice.actions;

@@ -6,13 +6,19 @@ import Stack from "@mui/material/Stack";
 import { grey, purple } from "@mui/material/colors";
 
 export const ColorButton = styled(Button)(({ theme }) => ({
-  color: purple[900],
-  textTransform: 'none',
-  fontSize: 18,
-  backgroundColor: "white",
-  fontFamily:['sans-serif'],
+  color: "#0d0d0e",
+  textTransform: "none",
+  fontSize: "1.2rem",
+  lineHeight: "1rem",
+
+  backgroundColor: "",
+
+  textDecoration: "none",
+  fontWeight: "600",
+  fontFamily: ["sans-serif"],
+  border: "none",
   "&:hover": {
-    color:purple[900],
-   
+    color: purple[500],
+    backgroundColor: "white",
   },
 }));

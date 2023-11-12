@@ -4,12 +4,12 @@ import { Link, useLocation } from "react-router-dom";
 import Filter from "../components/Filter/Filter";
 import { BsFilterRight } from "react-icons/bs";
 import FilterPage from "../components/Filter/FilterPage";
-import { AiOutlineHeart ,AiFillHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 import { CategoryProduct } from "../utils/filterProducts";
 const AllProducts = ({ category }) => {
   // const { products } = useSelector((state) => state.products);
-  const [favorite ,setFavorite]=useState(false)
+  const [favorite, setFavorite] = useState(false);
   const [products, setProducts] = useState([]); // Initialize products state
 
   useEffect(() => {

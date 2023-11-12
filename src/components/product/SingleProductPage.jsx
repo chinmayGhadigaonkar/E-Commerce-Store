@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import MultiImg from "./MultiImg";
-import {  cartFetch } from "../../store/Slice/cartSlice";
+import { cartFetch } from "../../store/Slice/cartSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-hot-toast";
 import { VITE_BACKEND_URL } from "../../config";
 import { addToCart } from "../../store/Slice/cartSlice";
-import { AiOutlineHeart ,AiFillHeart } from "react-icons/ai";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 
 const SingleProductPage = () => {
   const [product, setProduct] = useState([]);
   const [ProductImg, setProductImg] = useState([]);
- 
+
   const dispatch = useDispatch();
   const location = useLocation();
 
   const fetchdata = async () => {
     try {
-      const res = await fetch(`${VITE_BACKEND_URL}/products/getproduct/${location.pathname.split("/")[2]}`);
+      const res = await fetch(
+        `${VITE_BACKEND_URL}/products/getproduct/${
+          location.pathname.split("/")[2]
+        }`,
+      );
       const { product } = await res.json();
       setProduct(product);
       setProductImg(product[0].img);
@@ -26,47 +30,17 @@ const SingleProductPage = () => {
     }
   };
 
-  const [changeIMG ,setchangeIMG]= useState()
-
-  //  Add To Cart
-  const addCart = async (product) => {
-    try {
-      const res = await fetch(`${VITE_BACKEND_URL}/cart/addtocart`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        }, 
-        credentials: "include",
-        body:JSON.stringify({
-            products: product
-        }),
-      });
-
-      const {products}= await res.json();
-      console.log(products);
-    
-    } catch {
-        toast.error("Something Went's to Wrong")
-    }
-  };
+  const [changeIMG, setchangeIMG] = useState();
 
   const handleOnCart = (product) => {
     if (localStorage.getItem("userInfo")) {
-        // addCart(product)
-
-        // console.log(product)
-      // dispatch(addToCart(product));
-      dispatch(addToCart(product))
-
+      dispatch(addToCart(product));
     } else {
       toast.error("Plz Login before add to cart");
     }
 
     // dispatch(calTotalPrice(product.price))
   };
-
-  
-  
 
   useEffect(() => {
     fetchdata();
@@ -81,15 +55,24 @@ const SingleProductPage = () => {
             className="text-gray-600 body-font overflow-hidden">
             <div className="container px-5 py-24 mx-auto">
               <div>
-              <AiOutlineHeart  className='w-10 h-10  text-purple-500 border-none cursor-pointer ml-auto '/>
+                <AiOutlineHeart className="w-10 h-10  text-purple-500 border-none cursor-pointer ml-auto " />
               </div>
               <div className="lg:w-4/5 mx-auto flex flex-col justify-center items-center ">
                 <div className="w-full">
-                  <img alt="ecommerce" className="lg:w-1/2  mx-auto w-full lg:h-1/3 h-[100%] object-cover object-center rounded" src={!changeIMG?p.img:changeIMG}  />
+                  <img
+                    alt="ecommerce"
+                    className="lg:w-1/2  mx-auto w-full lg:h-1/3 h-[100%] object-cover object-center rounded"
+                    src={!changeIMG ? p.img : changeIMG}
+                  />
                 </div>
-                <div className="flex  justify-between items-center space-x-2"  >
+                <div className="flex  justify-between items-center space-x-2">
                   {ProductImg.map((img) => {
-                    return <MultiImg key={img} IMG={img}  setchangeIMG={setchangeIMG} ></MultiImg>;
+                    return (
+                      <MultiImg
+                        key={img}
+                        IMG={img}
+                        setchangeIMG={setchangeIMG}></MultiImg>
+                    );
                   })}
                 </div>
                 <div className="lg:w-2/2 w-full lg:pt-10 lg:py-6 mt-6 lg:mt-0">
@@ -184,10 +167,7 @@ const SingleProductPage = () => {
                     <span className="title-font font-medium text-2xl text-gray-900">
                       ₹{p.price}
                     </span>
-                    <div>
-
-
-                    </div>
+                    <div></div>
 
                     <button
                       className="flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded"
@@ -196,7 +176,6 @@ const SingleProductPage = () => {
                       }}>
                       Add To Cart
                     </button>
-
                   </div>
                 </div>
               </div>

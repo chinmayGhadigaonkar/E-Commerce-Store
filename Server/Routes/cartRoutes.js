@@ -81,11 +81,9 @@ router.delete("/deleteitem", authMiddleware, async (req, res) => {
     const newArray = productsArray.filter((product) => {
       return product.title !== productName;
     });
-    const result = await Cart.findByIdAndUpdate(cart._id, {
-      products: newArray,
-    });
+    const result = await Cart.findByIdAndUpdate(cart._id, { products: newArray } , {new:true});
 
-    res.status(200).json({ success: true, result , msg:"Item delete form cart successfully" });
+    res.status(200).json({ success: true,cart:result ,msg:"Item delete form cart successfully" });
   } catch (e) {
     res.status(400).json({ e });
   }

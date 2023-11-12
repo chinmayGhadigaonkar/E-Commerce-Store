@@ -3,13 +3,18 @@ import productReducer from "./Slice/productSlice";
 import cartReducer from "./Slice/cartSlice";
 import userReducer from "./Slice/userSlice";
 import wishListReducer from "./Slice/wishListSlice";
-const store = configureStore({
-    reducer:{
-        products :productReducer,
-        cart :  cartReducer,
-        user: userReducer,
-        wishList: wishListReducer
-    }
-})
+import orderSlice from "./Slice/orderSlice";
+import addressSlice from "./Slice/addressSlice";
 
-export default store
+const store = configureStore({
+  reducer: {
+    products: productReducer,
+    cart: cartReducer,
+    user: userReducer,
+    wishList: wishListReducer,
+    order: orderSlice,
+    address: addressSlice,
+  },
+});
+
+export default store;

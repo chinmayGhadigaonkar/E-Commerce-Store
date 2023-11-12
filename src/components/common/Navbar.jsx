@@ -14,6 +14,7 @@ import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Fade from "@mui/material/Fade";
 import { ColorButton } from "../../utils/BootstrapButton";
+import "../../index.css";
 
 const Navbar = () => {
   const [show, setShow] = useState(false);
@@ -61,14 +62,17 @@ const Navbar = () => {
 
   const productSearch = async (e) => {
     try {
-      const res = await fetch(`${VITE_BACKEND_URL}/filter/search/?query=${query}`, {
-        method: "GET",
-        headers: {
-          "content-type": "application/json",
+      const res = await fetch(
+        `${VITE_BACKEND_URL}/filter/search/?query=${query}`,
+        {
+          method: "GET",
+          headers: {
+            "content-type": "application/json",
+          },
+          credentials: "include",
         },
-        credentials: "include",
-      });
-      
+      );
+
       const { success, products } = await res.json();
       if (success) {
         navigate(`/search`, {
@@ -112,7 +116,7 @@ const Navbar = () => {
         </div>
 
         <div
-          className={` z-50 opacity-[1] shadow-md md:shadow-none py-5 order-3 flex md:order-2  md:justify-end mx-4 font-bold text-center w-[100%] md:w-[100%] md:h-20 h-72 bg-white list-none space-x-4  transition-transform duration-200 md:translate-x-0 ${
+          className={` z-50  opacity-[1] shadow-md md:shadow-none py-5 order-3 flex md:order-2  md:justify-end mx-4 font-bold text-center w-[100%] md:w-[100%] md:h-20 h-72 bg-white list-none space-x-4  transition-transform duration-200 md:translate-x-0 ${
             show
               ? "translate-x-0 md:flex-row flex-col "
               : "translate-x-[1000px]  "
@@ -137,7 +141,7 @@ const Navbar = () => {
           </li>
 
           <li className="my-2 font-semibold text-gray-900 md:text-xl text-center  hover:text-purple-500 ">
-            <Link to="/Tshirt">T-Shirts</Link>
+            <Link to="/Tshirt">Tshirts</Link>
           </li>
           <li className="my-2 font-semibold text-gray-900  md:text-xl text-center  hover:text-purple-500 ">
             <Link to="/Mugs">Mugs</Link>
@@ -169,7 +173,7 @@ const Navbar = () => {
                   aria-haspopup="true"
                   aria-expanded={open ? "true" : undefined}
                   onClick={handleClick}>
-                 Accounts
+                  Profile
                 </ColorButton>
                 <Menu
                   id="fade-menu"
@@ -181,7 +185,9 @@ const Navbar = () => {
                   onClose={handleClose}
                   TransitionComponent={Fade}>
                   <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={()=>navigate("/wishlist")}>WishList</MenuItem>
+                  <MenuItem onClick={() => navigate("/wishlist")}>
+                    WishList
+                  </MenuItem>
                   <MenuItem onClick={handleClose}>
                     <Link to="/">
                       {/* <BiLogOut  className="text-purple-500 border-2 h-5 text-xl  cursor-pointer  "/> */}
@@ -224,7 +230,7 @@ const Navbar = () => {
         </div>
       </div>
       <div
-        className={` h-full w-[100vw] md:w-[30vw] bg-white  z-50 opacity-[1] overflow-hidden-x absolute top-0 right-0  ${
+        className={` h-full w-[100vw] md:w-[30vw] bg-white  z-50 opacity-[1] overflow-hidden-x fixed  top-0 right-0  ${
           cart
             ? "translate-x-0 visible transition-transform duration-200"
             : "translate-x-[1000px] hidden "

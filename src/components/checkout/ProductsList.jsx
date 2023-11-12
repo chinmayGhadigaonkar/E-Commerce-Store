@@ -1,38 +1,58 @@
 import React from "react";
-
+import { useDispatch, useSelector } from "react-redux";
 const ProductsList = () => {
+  const { cartProduct } = useSelector((state) => state.cart);
+
   return (
     <>
-      <div className=" border-b-2 my-4  ">
-        <div className="img flex ml-2 my-2 justify-between items-center">
-          <div className=" flex ">
-            <img
-              alt="ecommerce"
-              className=" object-fill w-[120px] border-2 mx-2 h-[120px] "
-              src="https://rukminim2.flixcart.com/image/416/416/l5ld8y80/smartwatch/n/i/m/-original-imagg8dddyyzjnxn.jpeg?q=70"
-            />
-            <div>
-              <h4 className="text-base  mt-2   font-semibold">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ipsam
-                repellat laudantium corrupti ratione quis
-              </h4>
-              <div>
-                <p className="text-base  mt-2  w-22 font-semibold">
-                  Price:- ₹ 500
-                </p>
-              </div>
-            </div>
+      <section className="text-gray-600 body-font overflow-y-auto">
+        <div className=" py-3 w-full ">
+          <div className="lg:w-3/3 w-full  overflow-auto">
+            <table className="table-auto w-full text-left whitespace-no-wrap">
+              <thead>
+                <tr>
+                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
+                    Product{" "}
+                  </th>
+                  {/* <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Name</th> */}
+                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                    Quantity
+                  </th>
+                  <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
+                    Price
+                  </th>
+                  {/* <th className="w-10 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th> */}
+                </tr>
+              </thead>
+              <tbody>
+                {cartProduct.map((product) => {
+                  return (
+                    <tr
+                      className=" border-b-2 border-gray-300"
+                      key={product._id}>
+                      <td className="px-2 py-3">
+                        <div className="flex ">
+                          <img
+                            alt="ecommerce"
+                            className=" object-fill  h-20 ml-2 w-30 "
+                            src={product.img}
+                          />{" "}
+                          <h1 className=" my-2 mx-2">{product.title}</h1>
+                        </div>
+                      </td>
+                      <td className="px-5 ">1</td>
+                      <td className="px-5  text-lg text-gray-900">
+                        {" "}
+                        {product.price}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
           </div>
-
-          {/* <div className="mr-1 ">
-        <BsTrashFill
-          className="h-5 w-6 text-purple-500 cursor-pointer"
-          onClick={() => {
-            removeBtn(product);
-          }}></BsTrashFill>
-      </div> */}
         </div>
-      </div>
+      </section>
     </>
   );
 };

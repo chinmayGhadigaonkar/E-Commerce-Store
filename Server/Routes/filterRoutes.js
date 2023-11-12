@@ -3,32 +3,31 @@ import Product from "../models/product.js"
 const router= Router();
 
 // Filter products
-router.get("/products", async(req,res)=>{
-  try{
-    const { category, minPrice, maxPrice } = req.query;
-  let filter ={};
+router.get("/products", async (req, res) => {
+  try {
+    const { categories, minPrice, maxPrice } = req.query;
+    let filter = {};
 
-  if (category) {
-    filter.category = category;
-  }
-  if (minPrice && maxPrice) {
-    filter.price = { $gte: Number(minPrice), $lte: Number(maxPrice) };
+    if (categories) {
+      // Split the categories string into an array if it's provided
+      filter.category = Array.isArray(categories) ? categories : [categories];
+    }
 
-  }
-  const products = await Product.find({category:filter.category, price:filter.price});
-  
-  if (products.length === 0) {
-    res.status(404).json({ message: 'No products found matching the criteria.' });
-  } else {
-    res.json(products);
-  }
+    if (minPrice && maxPrice) {
+      filter.price = { $gte: Number(minPrice), $lte: Number(maxPrice) };
+    }
 
-  }catch(error){
+    const products = await Product.find(filter);
+
+    if (products.length === 0) {
+      res.status(404).json({ message: 'No products found matching the criteria.' });
+    } else {
+      res.json(products);
+    }
+  } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' });
-
   }
-  
-})
+});
 
 // Category wise product
 router.get("/products/:category", async(req,res)=>{
