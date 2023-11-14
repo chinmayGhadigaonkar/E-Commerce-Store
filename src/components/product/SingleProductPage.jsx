@@ -80,8 +80,16 @@ const SingleProductPage = () => {
                     E-Commerce Store
                   </h2>
                   <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                    {p.title}{" "}
+                    {p.title}
                   </h1>
+
+                  <h1
+                    className={`text-red-400 text-xl ${
+                      p.availableQty == 0 ? "static" : "hidden"
+                    }  font-sm my-2`}>
+                    currently out off stock
+                  </h1>
+
                   <div className="flex mb-4">
                     <span className="flex items-center">
                       <svg
@@ -170,7 +178,12 @@ const SingleProductPage = () => {
                     <div></div>
 
                     <button
-                      className="flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded"
+                      disabled={p.availableQty == 0 ? true : false}
+                      className={`flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none rounded ${
+                        p.availableQty == 0
+                          ? "bg-purple-50  "
+                          : " bg-purple-500 hover:bg-purple-600"
+                      } `}
                       onClick={() => {
                         handleOnCart(p);
                       }}>

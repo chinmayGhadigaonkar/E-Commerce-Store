@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ShippingInfo from "./ShippingInfo";
 import ProductCheckout from "./OrderBill";
 import ProductsList from "./ProductsList";
 import Address from "./Address";
@@ -7,6 +6,10 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { getAddress } from "../../store/Slice/addressSlice";
 import { createOrder } from "../../store/Slice/orderSlice";
+import { useNavigate } from "react-router-dom";
+import { clearCart } from "../../store/Slice/cartSlice";
+import toast from "react-hot-toast";
+import { updateQuantity } from "../../store/Slice/productSlice";
 
 const Checkout = ({ setChildren, setShowModal }) => {
   const { address } = useSelector((state) => state.address);
@@ -14,37 +17,50 @@ const Checkout = ({ setChildren, setShowModal }) => {
   const dispatch = useDispatch();
 
   const [orderAddress, SetOrderAddress] = useState("");
-  // const [order, setOrder] = useState({
-  //   address: "",
-  //   product: "",
-  //   taxPrice: "",
-  //   shippingPrice: "",
-  //   subtotal: "",
-  // });
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getAddress());
   }, []);
+  // console.log(orderAddress);
 
   const taxPrice = 40;
   const shippingPrice = 50;
 
-  const handleOnOrder = (
-    cartProduct,
+  const handleOnOrder = async (
+    orderAddress,
     taxPrice,
     shippingPrice,
     productTPrice,
   ) => {
-    productTPrice = productTPrice + shippingPrice + taxPrice;
-    dispatch(
-      createOrder(
-        orderAddress,
-        cartProduct,
-        taxPrice,
-        shippingPrice,
-        productTPrice,
-      ),
-    );
+    // console.log(orderAddress);
+    if (orderAddress && cartProduct) {
+      const totalPrice = parseInt(productTPrice + taxPrice + shippingPrice);
+      const data = {
+        shippingInfo: orderAddress,
+        orderItems: cartProduct,
+        taxPrice: 40,
+        shippingPrice: 50,
+        totalPrice: totalPrice,
+      };
+
+      const action = await dispatch(createOrder(data));
+
+      //  for getting id for order summary
+      const orderId = action.payload._id;
+      //  update quantity
+      const orderItems = action.payload.orderItems;
+      navigate(`/orderSummary/${orderId}`);
+      for (let index = 0; index < orderItems.length; index++) {
+        dispatch(updateQuantity(orderItems[index]._id));
+      }
+
+      dispatch(clearCart());
+
+      toast.success("Your order is successfully place ");
+    } else {
+      toast.error("Plz add address before place the order");
+    }
   };
 
   return (
@@ -62,6 +78,7 @@ const Checkout = ({ setChildren, setShowModal }) => {
                   onClick={() => {
                     SetOrderAddress(info);
                   }}
+                  name="address"
                 />{" "}
                 {info.address} , {info.city}-{info.pinCode} , {info.state}
                 <br />
@@ -90,6 +107,7 @@ const Checkout = ({ setChildren, setShowModal }) => {
               <button
                 onClick={() =>
                   handleOnOrder(
+                    orderAddress,
                     cartProduct,
                     taxPrice,
                     shippingPrice,

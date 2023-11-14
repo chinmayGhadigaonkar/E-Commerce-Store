@@ -3,7 +3,7 @@ import express from "express";
 import connection from "./connection.js";
 import routes from "./Routes/productroutes.js";
 import router from "./Routes/authroutes.js";
-import orouter from "./Routes/ordrerRoutes.js";
+import orouter from "./Routes/orderRoutes.js";
 import cartrouter from "./Routes/cartRoutes.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";

@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const orderSchema = new mongoose.Schema(
   {
     shippingInfo: {},
-    orderItems: {},
+    orderItems: [],
     user: {
       type: mongoose.Schema.ObjectId,
       ref: "User",

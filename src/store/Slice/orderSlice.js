@@ -37,8 +37,9 @@ const orderSlice = createSlice({
 });
 
 export const getOrder = createAsyncThunk("fetch/getOrder", async (id) => {
+  // console.log(id);
   const res = await fetch(`${VITE_BACKEND_URL}/order/getOrder/${id}`, {
-    method: "POST",
+    method: "GET",
     headers: {
       "content-type": "application/json",
     },
@@ -46,16 +47,16 @@ export const getOrder = createAsyncThunk("fetch/getOrder", async (id) => {
   });
 
   const result = await res.json();
-  if (!result.success) {
-    toast.error("Product is already in cart");
-    return;
-  }
-  return result.order;
+  // console.log(result.orders);
+  return result.orders;
 });
 export const createOrder = createAsyncThunk(
   "fetch/createOrder",
-  async (address, product, taxPrice, shippingPrice, subtotal) => {
-    console.log(product);
+  async (data) => {
+    // console.log(address, product, taxPrice, shippingPrice, subtotal);
+    const { shippingInfo, orderItems, taxPrice, shippingPrice, totalPrice } =
+      data;
+    // console.log(address);
     const res = await fetch(`${VITE_BACKEND_URL}/order/createOrder`, {
       method: "POST",
       headers: {
@@ -63,11 +64,11 @@ export const createOrder = createAsyncThunk(
       },
       credentials: "include",
       body: JSON.stringify({
-        shippingInfo: address,
-        orderItems: product,
+        shippingInfo: shippingInfo,
+        orderItems: orderItems,
         taxPrice: taxPrice,
         shippingPrice: shippingPrice,
-        totalPrice: subtotal,
+        totalPrice: totalPrice,
       }),
     });
 
@@ -76,7 +77,8 @@ export const createOrder = createAsyncThunk(
       toast.error("Something problem ");
       return;
     }
-    console.log(result.order);
+
+    // console.log(result);
     return result.order;
   },
 );

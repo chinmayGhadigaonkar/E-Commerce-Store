@@ -68,7 +68,7 @@ function App() {
         <Route path="/products" element={<AllProducts />}></Route>
         <Route path="/search" element={<SearchPage />}></Route>
         <Route path="/wishList" element={<WishList />}></Route>
-        <Route path="/ordersummary" element={<OrderSummary />}></Route>
+        <Route path="/ordersummary/:id" element={<OrderSummary />}></Route>
 
         <Route path="*" element={<Page_404 />}></Route>
       </Routes>
