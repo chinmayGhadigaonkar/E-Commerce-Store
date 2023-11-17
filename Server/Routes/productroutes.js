@@ -1,6 +1,7 @@
 import express, { Router } from "express";
 import Product from "../models/product.js";
 import { authMiddleware, authorizeRoles } from "../Midware/authMiddleware.js";
+import { json } from "stream/consumers";
 const router = Router();
 
 // fetch all products from database
@@ -8,6 +9,40 @@ router.get("/getproducts", async (req, res) => {
   try {
     const product = await Product.find();
     res.status(200).json({ product });
+  } catch (err) {
+    res.status(404).json({ err: "something went to wrong" });
+  }
+});
+
+router.get("/getTshirt", async (req, res) => {
+  try {
+    const products = await Product.find({ category: "T-shirt" });
+    let tshirts = {};
+
+    for (let item of products) {
+      if (item.title in tshirts) {
+        if (
+          !tshirts[item.title].color.includes(item.color) &&
+          item.availableQty > 0
+        ) {
+          tshirts[item.title].color.push(item.color);
+        }
+        if (
+          !tshirts[item.title].size.includes(item.size) &&
+          item.availableQty > 0
+        ) {
+          tshirts[item.title].size.push(item.size);
+        }
+      } else {
+        tshirts[item.title] = JSON.parse(JSON.stringify(item));
+        if (item.availableQty > 0) {
+          tshirts[item.title].color = [item.color];
+          tshirts[item.title].size = [item.size];
+        }
+      }
+    }
+
+    res.status(200).json({ tshirts });
   } catch (err) {
     res.status(404).json({ err: "something went to wrong" });
   }

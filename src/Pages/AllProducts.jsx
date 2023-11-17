@@ -59,21 +59,6 @@ const AllProducts = ({ category }) => {
                   </Link>
                   <div className="flex">
                     <p className="mt-1">₹ {product.price}</p>
-                    {favorite ? (
-                      <AiFillHeart
-                        onClick={() => {
-                          handleOnAddWishList(product._id);
-                        }}
-                        className="w-6 h-6  text-purple-500 border-none cursor-pointer ml-auto "
-                      />
-                    ) : (
-                      <AiOutlineHeart
-                        onClick={() => {
-                          handleOnRemoveWishList();
-                        }}
-                        className="w-6 h-6  text-purple-500 border-none cursor-pointer ml-auto "
-                      />
-                    )}
                   </div>
                 </div>
               );

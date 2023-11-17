@@ -34,8 +34,6 @@ const cartSlice = createSlice({
         state.status = STATUSES.LOADING;
       })
       .addCase(addToCart.fulfilled, (state, action) => {
-        let isExists = false;
-
         state.cartProduct = action.payload;
 
         let total = 0;
@@ -64,8 +62,8 @@ const cartSlice = createSlice({
       .addCase(removeCart.pending, (state, action) => {
         state.status = STATUSES.LOADING;
       })
-      .addCase(removeCart.fulfilled, (state, action) => {       
-        state.cartProduct= action.payload
+      .addCase(removeCart.fulfilled, (state, action) => {
+        state.cartProduct = action.payload;
         let total = 0;
         for (let index = 0; index < state.cartProduct.length; index++) {
           total += state.cartProduct[index].price;

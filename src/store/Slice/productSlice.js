@@ -36,6 +36,12 @@ export const productFetch = createAsyncThunk("fetch/allproduct", async () => {
   return JSON.parse(JSON.stringify(product));
 });
 
+export const tshirtFetch = createAsyncThunk("fetch/getTshirt", async () => {
+  const res = await fetch(`${VITE_BACKEND_URL}/products/getTshirt`);
+  const { tshirts } = await res.json();
+  return JSON.parse(JSON.stringify(tshirts));
+});
+
 export const updateQuantity = createAsyncThunk(
   "fetch/updateproduct",
   async (id) => {

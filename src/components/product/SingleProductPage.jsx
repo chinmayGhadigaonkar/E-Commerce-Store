@@ -7,6 +7,7 @@ import { toast } from "react-hot-toast";
 import { VITE_BACKEND_URL } from "../../config";
 import { addToCart } from "../../store/Slice/cartSlice";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { AddToWishList, FetchWishList } from "../../store/Slice/wishListSlice";
 
 const SingleProductPage = () => {
   const [product, setProduct] = useState([]);
@@ -38,13 +39,22 @@ const SingleProductPage = () => {
     } else {
       toast.error("Plz Login before add to cart");
     }
+  };
 
-    // dispatch(calTotalPrice(product.price))
+  const handleOnWishList = (p) => {
+    dispatch(AddToWishList(p._id));
+    toast.success("product is added in whishlist");
   };
 
   useEffect(() => {
     fetchdata();
   }, []);
+
+  const [selectedSize, setSelectedSize] = useState(); // State to manage selected size
+
+  const handleSizeChange = (event) => {
+    setSelectedSize(event.target.value);
+  };
 
   return (
     <>
@@ -80,7 +90,8 @@ const SingleProductPage = () => {
                     E-Commerce Store
                   </h2>
                   <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                    {p.title}
+                    {p.title} - (
+                    {p.size && p.color ? p.size + "/" + p.color : ""})
                   </h1>
 
                   <h1
@@ -146,16 +157,31 @@ const SingleProductPage = () => {
                     </span>
                   </div>
                   <p className="leading-relaxed">{p.desc}</p>
-                  <div className="flex mt-6 items-center pb-5 border-b-2 border-gray-100 mb-5">
-                    <div className="flex ml-6 items-center">
+                  <div
+                    className={`flex mt-2 items-center pb-2  border-gray-100 mb-5 ${
+                      p.category === "T-shirt" ? "" : "hidden"
+                    }`}>
+                    <div className="flex ml-6  items-center">
                       <span className="mr-3">Size</span>
                       <div className="relative">
-                        <select className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-500 text-base pl-3 pr-10">
-                          <option>SM</option>
-                          <option>M</option>
-                          <option>L</option>
-                          <option>XL</option>
-                        </select>
+                        {p.size && p.color ? (
+                          <>
+                            <select
+                              className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-500 text-base pl-3 pr-10 "
+                              value={selectedSize}
+                              onChange={handleSizeChange}
+                              defaultValue={p.size}>
+                              <option value="S">S</option>
+                              <option value="M">M</option>
+                              <option value="L">L</option>
+                              <option value="XL">XL</option>
+                              <option value="XXL">XXL</option>
+                            </select>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+
                         <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                           <svg
                             fill="none"
@@ -171,24 +197,59 @@ const SingleProductPage = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="flex">
-                    <span className="title-font font-medium text-2xl text-gray-900">
+
+                  <div
+                    className={`flex mt-2 items-center pb-2  border-gray-100 ${
+                      p.category === "T-shirt" ? " static" : "hidden"
+                    } mb-5`}>
+                    <div className="flex ml-6 items-center">
+                      <span className="mr-3">Color</span>
+                      <div className="relative">
+                        {p.size && p.color ? (
+                          <>
+                            <div
+                              className={`border-2 rounded-2xl w-6 h-6 my-2 cursor-pointer border-white  round`}
+                              style={{ background: `${p.color}` }}></div>
+                          </>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex flex-1  justify-between  my-4">
+                    <span className="title-font font-medium text-2xl  text-gray-900">
                       ₹{p.price}
                     </span>
-                    <div></div>
+                    <div className="flex  space-x-3">
+                      <button
+                        disabled={p.availableQty == 0 ? true : false}
+                        className={`flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none rounded ${
+                          p.availableQty == 0
+                            ? "bg-purple-50  "
+                            : " bg-purple-500 hover:bg-purple-600"
+                        } `}
+                        onClick={() => {
+                          handleOnWishList(p);
+                        }}>
+                        Add To WishList{" "}
+                        {/* <AiOutlineHeart className="w-5 h-5 mx-1   text-white border-white cursor-pointer   " /> */}
+                      </button>
 
-                    <button
-                      disabled={p.availableQty == 0 ? true : false}
-                      className={`flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none rounded ${
-                        p.availableQty == 0
-                          ? "bg-purple-50  "
-                          : " bg-purple-500 hover:bg-purple-600"
-                      } `}
-                      onClick={() => {
-                        handleOnCart(p);
-                      }}>
-                      Add To Cart
-                    </button>
+                      <button
+                        disabled={p.availableQty == 0 ? true : false}
+                        className={`flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none rounded ${
+                          p.availableQty == 0
+                            ? "bg-purple-50  "
+                            : " bg-purple-500 hover:bg-purple-600"
+                        } `}
+                        onClick={() => {
+                          handleOnCart(p);
+                        }}>
+                        Add To Cart
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

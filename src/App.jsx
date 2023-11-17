@@ -20,6 +20,8 @@ import WishList from "./components/wishList/wishList";
 import { Modal } from "./components/common/Modal";
 import Page_404 from "./Pages/Page_404";
 import OrderSummary from "./components/order/OrderSummary";
+import { FetchWishList } from "./store/Slice/wishListSlice";
+import AllOrderPage from "./components/order/AllOrderPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,6 +35,7 @@ function App() {
   useEffect(() => {
     dispatch(productFetch());
     dispatch(cartFetch());
+    dispatch(FetchWishList());
   }, []);
 
   return (
@@ -48,7 +51,7 @@ function App() {
         <Route path="/" element={<Home></Home>}></Route>
         <Route
           path="/Tshirt"
-          element={<AllProducts category="T-shirt"></AllProducts>}></Route>
+          element={<Tshirt category="T-shirt"></Tshirt>}></Route>
         <Route
           path="/Mugs"
           element={<AllProducts category="Mugs"></AllProducts>}></Route>
@@ -69,6 +72,7 @@ function App() {
         <Route path="/search" element={<SearchPage />}></Route>
         <Route path="/wishList" element={<WishList />}></Route>
         <Route path="/ordersummary/:id" element={<OrderSummary />}></Route>
+        <Route path="/allorder" element={<AllOrderPage />}></Route>
 
         <Route path="*" element={<Page_404 />}></Route>
       </Routes>

@@ -6,19 +6,15 @@ import WishListItem from "./WishListItem";
 
 function WishlistPage() {
   const dispatch = useDispatch();
-  const wishlistProducts = useSelector((state) => state.wishList.products);
+  const { products } = useSelector((state) => state.wishList);
   const status = useSelector((state) => state.wishList.status);
-  const products = wishlistProducts.map((item) => item.product);
+  const product = products.map((item) => item.product);
 
-  useEffect(() => {
-    // Fetch wishlist products when the component mounts
-    dispatch(FetchWishList())
-      .unwrap()
-      .catch((error) => {
-        console.error("Error fetching wishlist products:", error);
-      });
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(FetchWishList());
+  // }, []);
 
+  // console.log(product);
   return (
     <div>
       {status === "loading" ? (
@@ -27,14 +23,23 @@ function WishlistPage() {
         <p>Error loading wishlist products</p>
       ) : (
         <div className="px-5 py-4 mx-auto">
-          <div className="container text-center mt-16 ">
-            <h1 className="text-2xl font-semibold  text-gray-900  my-2">
-              My WishList{" "}
-            </h1>
-          </div>
+          {products == null ? (
+            <div className="container text-center mt-16 ">
+              <h1 className={`text-2xl font-semibold  text-gray-900  my-2 `}>
+                My WishList{" "}
+              </h1>
+            </div>
+          ) : (
+            <div className="container text-center mt-16 ">
+              <h1 className={`text-2xl font-semibold  text-gray-900  my-2 `}>
+                Your Wishlist is Empty
+              </h1>
+            </div>
+          )}
+
           <div className="flex flex-wrap  justify-center items-center ml-3">
-            {products.map((product) => {
-              return <WishListItem product={product} />;
+            {product.map((product) => {
+              return <WishListItem product={product} key={product._id} />;
             })}
           </div>
         </div>

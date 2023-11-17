@@ -184,9 +184,11 @@ const Navbar = () => {
                   open={open}
                   onClose={handleClose}
                   TransitionComponent={Fade}>
-                  <MenuItem onClick={handleClose}>Profile</MenuItem>
-                  <MenuItem onClick={() => navigate("/wishlist")}>
+                  <MenuItem onClick={() => navigate("/wishlist/")}>
                     WishList
+                  </MenuItem>
+                  <MenuItem onClick={() => navigate("/allorder")}>
+                    Your Order
                   </MenuItem>
                   <MenuItem onClick={handleClose}>
                     <Link to="/">
