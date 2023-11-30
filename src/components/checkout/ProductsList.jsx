@@ -35,7 +35,7 @@ const ProductsList = () => {
                           <img
                             alt="ecommerce"
                             className=" object-fill  h-20 ml-2 w-30 "
-                            src={product.img}
+                            src={product.img[0]}
                           />{" "}
                           <h1 className=" my-2 mx-2">{product.title}</h1>
                         </div>

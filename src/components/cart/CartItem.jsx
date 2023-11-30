@@ -16,8 +16,8 @@ const CartItem = ({ product }) => {
       <div className=" flex ">
         <img
           alt="ecommerce"
-          className=" object-fill w-[80px] border-2 mx-2 h-[80px] "
-          src={product.img}
+          className=" object-fill w-[80px]   mx-2 h-[80px] "
+          src={product.img[0]}
         />
         <h4 className="text-base  mt-2  w-52 font-semibold">{product.title}</h4>
       </div>

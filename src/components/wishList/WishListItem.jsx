@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { AiOutlineDelete } from "react-icons/ai";
+// import { AiOutlineDelete } from "react-icons/ai";
+import { FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import {
   FetchWishList,
@@ -17,7 +18,7 @@ const WishListItem = ({ product }) => {
     toast.success("Item is remove from cart");
   };
   return (
-    <div className="lg:w-3/12 md:w-1/3  lg:h-[32rem]  p-4 w-full border-2 mx-2 my-2">
+    <div className="lg:w-3/12 md:w-1/3 shadow-lg  sm:h-[32rem]  p-4 w-full border-2 mx-2 my-2">
       <Link to={`/product/${product.slug}`}>
         <div className="block relative rounded overflow-hidden bg-purple-900 cursor-pointer">
           <img
@@ -44,7 +45,7 @@ const WishListItem = ({ product }) => {
             onClick={() => handleonRemoveItem(product._id)}
             className="flex ml-auto  text-purple-500  border-0 py-1 px-2 focus:outline-none  rounded text-lg ">
             {" "}
-            <AiOutlineDelete />
+            <FaTrash />
           </button>
         </div>
       </div>

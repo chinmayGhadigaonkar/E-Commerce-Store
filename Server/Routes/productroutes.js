@@ -2,7 +2,10 @@ import express, { Router } from "express";
 import Product from "../models/product.js";
 import { authMiddleware, authorizeRoles } from "../Midware/authMiddleware.js";
 import { json } from "stream/consumers";
+import singleUpload from "../Midware/multer.js";
+import getDataURI from "../utills/dataUrl.js";
 const router = Router();
+import cloudinary from "cloudinary";
 
 // fetch all products from database
 router.get("/getproducts", async (req, res) => {
@@ -16,32 +19,26 @@ router.get("/getproducts", async (req, res) => {
 
 router.get("/getTshirt", async (req, res) => {
   try {
-    const products = await Product.find({ category: "T-shirt" });
+    const products = await Product.find();
     let tshirts = {};
 
     for (let item of products) {
       if (item.title in tshirts) {
         if (
-          !tshirts[item.title].color.includes(item.color) &&
-          item.availableQty > 0
-        ) {
-          tshirts[item.title].color.push(item.color);
-        }
-        if (
           !tshirts[item.title].size.includes(item.size) &&
-          item.availableQty > 0
+          item.availableQty > 0 &&
+          tshirts[item.title].color.includes(item.color)
         ) {
           tshirts[item.title].size.push(item.size);
         }
       } else {
         tshirts[item.title] = JSON.parse(JSON.stringify(item));
         if (item.availableQty > 0) {
-          tshirts[item.title].color = [item.color];
+          // tshirts[item.title].color = [item.color];
           tshirts[item.title].size = [item.size];
         }
       }
     }
-
     res.status(200).json({ tshirts });
   } catch (err) {
     res.status(404).json({ err: "something went to wrong" });
@@ -51,27 +48,53 @@ router.get("/getTshirt", async (req, res) => {
 // add products in database   --- Admin
 router.post(
   "/addproducts",
-  authMiddleware,
-  authorizeRoles(true),
-  authMiddleware,
+  // authMiddleware,
+  // authorizeRoles(true),
+  singleUpload,
+
   async (req, res) => {
     try {
       const {
         title,
         slug,
         desc,
-        img,
+
         category,
         size,
         color,
         price,
         availableQty,
       } = req.body;
+
+      const slugdata = await Product.find({ slug });
+      // console.log(slugdata);
+
+      if (!slugdata) {
+        res.status(200).json({ msg: "slug should be unique  " });
+        return;
+      }
+
+      const files = req.files;
+      let fileDataUris = [];
+      let imageUrl = [];
+
+      for (let i = 0; i < files.length; i++) {
+        fileDataUris.push(getDataURI(files[i]));
+      }
+      // console.log(fileDataUris);
+
+      for (let i = 0; i < fileDataUris.length; i++) {
+        const cloud = await cloudinary.v2.uploader.upload(
+          fileDataUris[i].content,
+        );
+        imageUrl.push(cloud.url);
+      }
+
       const data = new Product({
         title,
         slug,
         desc,
-        img,
+        img: imageUrl,
         category,
         size,
         color,
@@ -81,19 +104,60 @@ router.post(
       const product = await data.save();
       res.status(200).json({ product });
     } catch (err) {
-      res.status(404).json({ err: "something went to wrong" });
+      res.status(404).json({ err: err.message });
     }
   },
 );
 
-// fetch a product using slug
+// fetch a product using slug of title
 router.get("/getproduct/:slug", async (req, res) => {
   try {
     const slug = req.params.slug;
     const product = await Product.find({ slug });
-    res.status(200).json({ product });
+
+    const products = await Product.find();
+
+    let cproduct = {};
+
+    cproduct[product[0].title] = {
+      _id: product[0]._id,
+      title: product[0].title,
+      slug: product[0].slug,
+      desc: product[0].desc,
+      desc: product[0].desc,
+      img: product[0].img,
+      category: product[0].category,
+      color: product[0].color,
+      price: product[0].price,
+      availableQty: product[0].availableQty,
+      createdAt: product[0].createdAt,
+      updatedAt: product[0].updatedAt,
+      sizes: [product[0].size], // Start with the first size from the queried product
+    };
+
+    for (let item of products) {
+      if (item.title === product[0].title && item.size !== product[0].size) {
+        // Check for the same product title and different sizes
+        cproduct[product[0].title].sizes.push(item.size);
+      }
+    }
+
+    res.status(200).json({ product: cproduct });
+    // res.status(200).json({ product: cproduct });
   } catch (err) {
-    res.status(404).json({ err: "something went to wrong" });
+    res.status(404).json({ err: err.message });
+  }
+});
+
+router.get("/getslugproduct/:slug", async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    const product = await Product.find({ slug });
+
+    res.status(200).json({ product: product });
+    // res.status(200).json({ product: cproduct });
+  } catch (err) {
+    res.status(404).json({ err: err.message });
   }
 });
 
@@ -150,6 +214,27 @@ router.put(
     }
   },
 );
+
+//
+router.get("/:size", async (req, res) => {
+  try {
+    const { size } = req.params;
+    const { title } = req.query;
+
+    const tShirts = await Product.findOne({ size, title });
+
+    if (tShirts.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No T-shirts found" });
+    }
+
+    res.status(200).json({ success: true, data: tShirts });
+  } catch (err) {
+    res.status(404).json({ err: "something went to wrong" });
+  }
+});
+
 // delete product  --- Admin
 router.delete(
   "/deleteproduct/:id",

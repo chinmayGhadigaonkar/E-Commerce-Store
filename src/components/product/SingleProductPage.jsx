@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import MultiImg from "./MultiImg";
 import { cartFetch } from "../../store/Slice/cartSlice";
 import { useDispatch } from "react-redux";
@@ -8,13 +8,16 @@ import { VITE_BACKEND_URL } from "../../config";
 import { addToCart } from "../../store/Slice/cartSlice";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { AddToWishList, FetchWishList } from "../../store/Slice/wishListSlice";
+import { FetchSizeTshirt, tshirtFetch } from "../../store/Slice/productSlice";
 
 const SingleProductPage = () => {
   const [product, setProduct] = useState([]);
   const [ProductImg, setProductImg] = useState([]);
+  const [slugproduct, setslugproduct] = useState("");
 
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const fetchdata = async () => {
     try {
@@ -24,25 +27,53 @@ const SingleProductPage = () => {
         }`,
       );
       const { product } = await res.json();
-      setProduct(product);
-      setProductImg(product[0].img);
+      const data = mapData(product);
+      // console.log(data[0]);
+
+      setProduct(data);
+      // console.log(data[0].img);
+      setProductImg(data[0].img);
     } catch (e) {
       toast.error("Something went's wrong. Please try again");
     }
   };
 
+  const fetchslugproduct = async () => {
+    try {
+      const res = await fetch(
+        `${VITE_BACKEND_URL}/products/getslugproduct/${
+          location.pathname.split("/")[2]
+        }`,
+      );
+      const { product } = await res.json();
+
+      setslugproduct(product);
+    } catch (e) {
+      toast.error("Something went's wrong. Please try again");
+    }
+  };
+
+  useEffect(() => {
+    const fetch = async () => {
+      return await fetchslugproduct();
+    };
+    fetch();
+  }, []);
+
   const [changeIMG, setchangeIMG] = useState();
 
   const handleOnCart = (product) => {
     if (localStorage.getItem("userInfo")) {
-      dispatch(addToCart(product));
+      dispatch(addToCart(product[0]));
     } else {
       toast.error("Plz Login before add to cart");
     }
   };
 
   const handleOnWishList = (p) => {
-    dispatch(AddToWishList(p._id));
+    if (localStorage.getItem("userInfo")) {
+      dispatch(AddToWishList(p[0]._id));
+    }
     toast.success("product is added in whishlist");
   };
 
@@ -50,10 +81,33 @@ const SingleProductPage = () => {
     fetchdata();
   }, []);
 
-  const [selectedSize, setSelectedSize] = useState(); // State to manage selected size
+  const handleSize = async (Size, product) => {
+    const data = {
+      Size: Size,
+      title: product.title,
+    };
+    const action = await dispatch(FetchSizeTshirt(data));
+    window.location.assign(`/product/${action.payload}`);
+  };
 
-  const handleSizeChange = (event) => {
-    setSelectedSize(event.target.value);
+  const mapData = (Data) => {
+    return Object.keys(Data).map((key) => {
+      const tshirt = Data[key];
+      return {
+        _id: tshirt._id,
+        title: tshirt.title,
+        slug: tshirt.slug,
+        description: tshirt.desc,
+        img: tshirt.img,
+        category: tshirt.category,
+        size: tshirt.sizes,
+        color: tshirt.color,
+        price: tshirt.price,
+        availableQuantity: tshirt.availableQty,
+        createdAt: tshirt.createdAt,
+        updatedAt: tshirt.updatedAt,
+      };
+    });
   };
 
   return (
@@ -64,15 +118,12 @@ const SingleProductPage = () => {
             key={p._id}
             className="text-gray-600 body-font overflow-hidden">
             <div className="container px-5 py-24 mx-auto">
-              <div>
-                <AiOutlineHeart className="w-10 h-10  text-purple-500 border-none cursor-pointer ml-auto " />
-              </div>
               <div className="lg:w-4/5 mx-auto flex flex-col justify-center items-center ">
                 <div className="w-full">
                   <img
                     alt="ecommerce"
                     className="lg:w-1/2  mx-auto w-full lg:h-1/3 h-[100%] object-cover object-center rounded"
-                    src={!changeIMG ? p.img : changeIMG}
+                    src={!changeIMG ? p.img[0] : changeIMG}
                   />
                 </div>
                 <div className="flex  justify-between items-center space-x-2">
@@ -90,8 +141,7 @@ const SingleProductPage = () => {
                     E-Commerce Store
                   </h2>
                   <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">
-                    {p.title} - (
-                    {p.size && p.color ? p.size + "/" + p.color : ""})
+                    {p.title} - ({p.size[0] + "/" + p.color})
                   </h1>
 
                   <h1
@@ -158,29 +208,20 @@ const SingleProductPage = () => {
                   </div>
                   <p className="leading-relaxed">{p.desc}</p>
                   <div
-                    className={`flex mt-2 items-center pb-2  border-gray-100 mb-5 ${
-                      p.category === "T-shirt" ? "" : "hidden"
-                    }`}>
-                    <div className="flex ml-6  items-center">
+                    className={`flex mt-2 items-center pb-2  border-gray-100 mb-5 `}>
+                    <div className="flex ml-1 my-2  items-center">
                       <span className="mr-3">Size</span>
                       <div className="relative">
-                        {p.size && p.color ? (
-                          <>
-                            <select
-                              className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-purple-200 focus:border-purple-500 text-base pl-3 pr-10 "
-                              value={selectedSize}
-                              onChange={handleSizeChange}
-                              defaultValue={p.size}>
-                              <option value="S">S</option>
-                              <option value="M">M</option>
-                              <option value="L">L</option>
-                              <option value="XL">XL</option>
-                              <option value="XXL">XXL</option>
-                            </select>
-                          </>
-                        ) : (
-                          <></>
-                        )}
+                        {p.size.map((size) => {
+                          return (
+                            <button
+                              key={size}
+                              onClick={() => handleSize(size, p)}
+                              className="border-2 border-gray-200 text-white w-10 py-1 bg-purple-500 rounded-md mx-2  ">
+                              {size}
+                            </button>
+                          );
+                        })}
 
                         <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                           <svg
@@ -198,26 +239,6 @@ const SingleProductPage = () => {
                     </div>
                   </div>
 
-                  <div
-                    className={`flex mt-2 items-center pb-2  border-gray-100 ${
-                      p.category === "T-shirt" ? " static" : "hidden"
-                    } mb-5`}>
-                    <div className="flex ml-6 items-center">
-                      <span className="mr-3">Color</span>
-                      <div className="relative">
-                        {p.size && p.color ? (
-                          <>
-                            <div
-                              className={`border-2 rounded-2xl w-6 h-6 my-2 cursor-pointer border-white  round`}
-                              style={{ background: `${p.color}` }}></div>
-                          </>
-                        ) : (
-                          <></>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-
                   <div className="flex flex-1  justify-between  my-4">
                     <span className="title-font font-medium text-2xl  text-gray-900">
                       ₹{p.price}
@@ -231,7 +252,7 @@ const SingleProductPage = () => {
                             : " bg-purple-500 hover:bg-purple-600"
                         } `}
                         onClick={() => {
-                          handleOnWishList(p);
+                          handleOnWishList(slugproduct);
                         }}>
                         Add To WishList{" "}
                         {/* <AiOutlineHeart className="w-5 h-5 mx-1   text-white border-white cursor-pointer   " /> */}
@@ -245,7 +266,7 @@ const SingleProductPage = () => {
                             : " bg-purple-500 hover:bg-purple-600"
                         } `}
                         onClick={() => {
-                          handleOnCart(p);
+                          handleOnCart(slugproduct);
                         }}>
                         Add To Cart
                       </button>

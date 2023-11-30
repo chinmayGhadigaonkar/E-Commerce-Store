@@ -38,6 +38,22 @@ function App() {
     dispatch(FetchWishList());
   }, []);
 
+  const tshirtHead = {
+    title: "Explore Our T-shirts Collection",
+    paragraph: `Buy T-Shirts at the best price in India. We offer a wide range of tshirts for all interests, including coding tshirts, anime tshirts,
+    and casual tshirts for everyday wear. All of our tshirts are made
+    with high-quality materials and are designed to be comfortable and
+    durable. Shop now and find the perfect tshirt for you! `,
+  };
+  const SweatshirtsHead = {
+    title: "Explore Our Sweatshirts Collection",
+    paragraph: `Our sweatshirts are perfect for every occasion, whether you're looking for a casual everyday sweatshirt or something to wear to the gym. We have a variety of styles to choose from, including coding sweatshirts, anime sweatshirts, and casual sweatshirts for everyday wear. All of our sweatshirts are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect sweatshirt for you! `,
+  };
+  const capHead = {
+    title: "Explore Our Caps Collection",
+    paragraph: `Our caps are perfect for every occasion, whether you're looking for a casual everyday cap or something to wear to the gym. We have a variety of styles to choose from, including coding caps, anime caps, and casual caps for everyday wear. All of our caps are made with high-quality materials and are designed to be comfortable and durable. Shop now and find the perfect cap for you! `,
+  };
+
   return (
     <BrowserRouter>
       <Navbar />
@@ -51,13 +67,21 @@ function App() {
         <Route path="/" element={<Home></Home>}></Route>
         <Route
           path="/Tshirt"
-          element={<Tshirt category="T-shirt"></Tshirt>}></Route>
+          element={
+            <AllProducts category="T-shirt" Head={tshirtHead}></AllProducts>
+          }></Route>
         <Route
-          path="/Mugs"
-          element={<AllProducts category="Mugs"></AllProducts>}></Route>
+          path="/Sweatshirts"
+          element={
+            <AllProducts
+              category="Sweatshirts"
+              Head={SweatshirtsHead}></AllProducts>
+          }></Route>
         <Route
           path="/Caps"
-          element={<AllProducts category="Caps"></AllProducts>}></Route>
+          element={
+            <AllProducts category="Caps" Head={capHead}></AllProducts>
+          }></Route>
         <Route
           path="/product/:slug"
           element={<SingleProductPage></SingleProductPage>}></Route>

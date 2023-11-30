@@ -50,6 +50,21 @@ export const getOrder = createAsyncThunk("fetch/getOrder", async (id) => {
   // console.log(result.orders);
   return result.orders;
 });
+
+export const getAllOrder = createAsyncThunk("fetch/getAllOrder", async () => {
+  // console.log(id);
+  const res = await fetch(`${VITE_BACKEND_URL}/order/getOrder/`, {
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+    },
+    credentials: "include",
+  });
+
+  const result = await res.json();
+  console.log(result.orders);
+  return result.orders;
+});
 export const createOrder = createAsyncThunk(
   "fetch/createOrder",
   async (data) => {

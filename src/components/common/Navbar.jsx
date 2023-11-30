@@ -144,7 +144,7 @@ const Navbar = () => {
             <Link to="/Tshirt">Tshirts</Link>
           </li>
           <li className="my-2 font-semibold text-gray-900  md:text-xl text-center  hover:text-purple-500 ">
-            <Link to="/Mugs">Mugs</Link>
+            <Link to="/Sweatshirts">Sweatshirts</Link>
           </li>
           <li className="my-2 font-semibold text-gray-900  md:text-xl text-center hover:text-purple-500  ">
             <Link to="/Caps">Caps</Link>
@@ -184,7 +184,11 @@ const Navbar = () => {
                   open={open}
                   onClose={handleClose}
                   TransitionComponent={Fade}>
-                  <MenuItem onClick={() => navigate("/wishlist/")}>
+                  <MenuItem
+                    onClick={() => {
+                      navigate("/wishlist"),
+                        window.location.assign(`/wishlist`);
+                    }}>
                     WishList
                   </MenuItem>
                   <MenuItem onClick={() => navigate("/allorder")}>

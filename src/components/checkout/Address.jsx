@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addAddress } from "../../store/Slice/addressSlice";
+import { addAddress, getAddress } from "../../store/Slice/addressSlice";
 
 const Address = () => {
   const [add, setAdd] = useState({
@@ -15,6 +15,8 @@ const Address = () => {
 
   const handleonAddress = (data) => {
     dispatch(addAddress(add));
+    window.location.assign(`/checkout`);
+    dispatch(getAddress());
   };
 
   const handleChange = (event) => {

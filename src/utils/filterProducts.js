@@ -13,13 +13,33 @@ export const CategoryProduct = async (category) => {
     const res = await fetch(`${VITE_BACKEND_URL}/filter/products/${category}`, {
       headers: {
         "content-type": "application/json",
-      },});
+      },
+    });
 
-      const {products}=await res.json();
-        
-      return products
+    const { products } = await res.json();
+    const mapData = (products) => {
+      return Object.keys(products).map((key) => {
+        const data = products[key];
+        return {
+          id: data._id,
+          title: data.title,
+          slug: data.slug,
+          description: data.desc,
+          img: data.img,
+          category: data.category,
+          sizes: data.size,
+          colors: data.color,
+          price: data.price,
+          availableQuantity: data.availableQty,
+          createdAt: data.createdAt,
+          updatedAt: data.updatedAt,
+        };
+      });
+    };
+    const result = mapData(products);
 
-  } catch (e){
+    return result;
+  } catch (e) {
     console.log(e);
   }
 };

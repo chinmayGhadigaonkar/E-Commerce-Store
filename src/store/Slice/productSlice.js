@@ -42,6 +42,26 @@ export const tshirtFetch = createAsyncThunk("fetch/getTshirt", async () => {
   return JSON.parse(JSON.stringify(tshirts));
 });
 
+export const FetchSizeTshirt = createAsyncThunk(
+  "fetch/SizeTshirt",
+  async (data1) => {
+    const { Size, title } = data1;
+
+    const res = await fetch(
+      `${VITE_BACKEND_URL}/products/${Size}?title=${title}`,
+      {
+        headers: {
+          "content-type": "application/json",
+        },
+        credentials: "include",
+      },
+    );
+    const { data } = await res.json();
+
+    return data.slug;
+  },
+);
+
 export const updateQuantity = createAsyncThunk(
   "fetch/updateproduct",
   async (id) => {

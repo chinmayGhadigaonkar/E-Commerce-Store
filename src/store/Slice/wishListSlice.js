@@ -69,6 +69,7 @@ export const FetchWishList = createAsyncThunk(
         credentials: "include",
       });
       const result = await res.json();
+      // console.log(result);
       return JSON.parse(JSON.stringify(result));
     } catch (error) {
       console.log(error);

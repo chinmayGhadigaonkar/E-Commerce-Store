@@ -42,12 +42,12 @@ const Tshirt = () => {
     fetchData();
   }, [dispatch]); // Include dispatch as a dependency
 
-  console.log(tshirts);
+  // console.log(tshirts);
   return (
     <>
       <section className="text-gray-900 body-font">
-        <div className="container text-center mt-16 ">
-          <h1 className="text-2xl font-semibold  text-gray-900  my-2">
+        <div className="container sm:mx-auto text-center mt-16 ">
+          <h1 className="text-2xl  font-semibold  text-gray-900  my-2">
             Explore Our T-shirts Collection
           </h1>
           <p className="text-sm font-medium  text-gray-900 my-2">
@@ -59,13 +59,13 @@ const Tshirt = () => {
             durable. Shop now and find the perfect tshirt for you!
           </p>
         </div>
-        <div className="px-5 py-12 mx-auto">
+        <div className="px-5 py-12  mx-auto">
           <div className="flex flex-wrap  justify-center items-center ml-3">
             {tshirts.map((product) => {
               return (
                 <div
                   key={product._id}
-                  className="lg:w-3/12 md:w-1/3  p-4 w-full border-2 mx-2 my-2">
+                  className="lg:w-3/12 shadow-xl md:w-1/3  sm:h-[33rem]  p-4 w-full border-2 mx-2 my-2">
                   <Link to={`/product/${product.slug}`}>
                     <div className="block relative rounded overflow-hidden bg-purple-900 cursor-pointer">
                       <img
@@ -91,19 +91,8 @@ const Tshirt = () => {
                     {product.sizes.map((p) => {
                       return (
                         <span className="border-2 mx-[2px] border-gray-500 p-1 ">
-                          {" "}
-                          {p}{" "}
+                          {p}
                         </span>
-                      );
-                    })}
-                  </div>
-
-                  <div className=" flex">
-                    {product.colors.map((c) => {
-                      return (
-                        <div
-                          className={`border-2 rounded-2xl w-6 h-6 my-2  border-white  round`}
-                          style={{ background: `${c}` }}></div>
                       );
                     })}
                   </div>

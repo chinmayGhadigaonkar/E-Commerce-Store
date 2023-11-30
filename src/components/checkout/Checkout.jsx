@@ -66,7 +66,9 @@ const Checkout = ({ setChildren, setShowModal }) => {
   return (
     <>
       <div className=" my-6  px-10">
-        <h1 className=" text-2xl  my-1">Chinmay Ghadigaonkar</h1>
+        <h1 className=" text-2xl  my-1">
+          {JSON.parse(localStorage.getItem("userInfo"))}
+        </h1>
 
         <div className="my-4 ml-2">
           {address.map((info) => {
@@ -78,9 +80,13 @@ const Checkout = ({ setChildren, setShowModal }) => {
                   onClick={() => {
                     SetOrderAddress(info);
                   }}
+                  id="address"
                   name="address"
                 />{" "}
-                {info.address} , {info.city}-{info.pinCode} , {info.state}
+                <label htmlFor="address">
+                  {" "}
+                  {info.address} , {info.city}-{info.pinCode} , {info.state}
+                </label>
                 <br />
               </div>
             );
@@ -114,7 +120,12 @@ const Checkout = ({ setChildren, setShowModal }) => {
                     productTPrice,
                   )
                 }
-                className="flex m-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded">
+                disabled={cartProduct == 0 && address != null}
+                className={`flex m-auto text-white  border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded ${
+                  cartProduct == 0 && address != null
+                    ? "bg-purple-300 "
+                    : "bg-purple-500"
+                }`}>
                 Place Order
               </button>
             </div>

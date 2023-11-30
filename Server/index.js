@@ -39,6 +39,7 @@ connection();
 
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 
 // Routes
 app.use("/products", routes);
