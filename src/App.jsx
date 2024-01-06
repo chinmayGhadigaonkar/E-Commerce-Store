@@ -22,9 +22,15 @@ import Page_404 from "./Pages/Page_404";
 import OrderSummary from "./components/order/OrderSummary";
 import { FetchWishList } from "./store/Slice/wishListSlice";
 import AllOrderPage from "./components/order/AllOrderPage";
+import ProductFliter from "./components/Filter/ProductFliter";
+import ProtectedRoutes from "./components/common/ProtectedRoutes";
+
+Filter;
 
 function App() {
   const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  const isAuthenticate = user ? true : false;
 
   const [showModal, setShowModal] = useState(false);
   const [children, setChildren] = useState(<>Model</>);
@@ -87,16 +93,20 @@ function App() {
           element={<SingleProductPage></SingleProductPage>}></Route>
         <Route path="/login" element={<Login></Login>}></Route>
         <Route path="/signup" element={<Signup />}></Route>
-        <Route
-          path="/checkout"
-          element={
-            <Checkout setChildren={setChildren} setShowModal={setShowModal} />
-          }></Route>
-        <Route path="/products" element={<AllProducts />}></Route>
+
+        {/* <Route path="/filterproduct" element={<ProductFliter />}></Route> */}
         <Route path="/search" element={<SearchPage />}></Route>
-        <Route path="/wishList" element={<WishList />}></Route>
-        <Route path="/ordersummary/:id" element={<OrderSummary />}></Route>
-        <Route path="/allorder" element={<AllOrderPage />}></Route>
+
+        <Route element={<ProtectedRoutes isAuthenticate={isAuthenticate} />}>
+          <Route path="/wishList" element={<WishList />}></Route>
+          <Route path="/ordersummary/:id" element={<OrderSummary />}></Route>
+          <Route path="/allorder" element={<AllOrderPage />}></Route>
+          <Route
+            path="/checkout"
+            element={
+              <Checkout setChildren={setChildren} setShowModal={setShowModal} />
+            }></Route>
+        </Route>
 
         <Route path="*" element={<Page_404 />}></Route>
       </Routes>

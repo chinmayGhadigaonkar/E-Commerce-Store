@@ -61,6 +61,9 @@ const Navbar = () => {
   };
 
   const productSearch = async (e) => {
+    if (query == undefined) {
+      return toast.error("Your Query is Empty ");
+    }
     try {
       const res = await fetch(
         `${VITE_BACKEND_URL}/filter/search/?query=${query}`,
@@ -74,6 +77,7 @@ const Navbar = () => {
       );
 
       const { success, products } = await res.json();
+      console.log(products);
       if (success) {
         navigate(`/search`, {
           state: {
@@ -81,12 +85,7 @@ const Navbar = () => {
           },
         });
       } else {
-        navigate(`/search`, {
-          state: {
-            products,
-          },
-        });
-        toast.error("Product is not our list");
+        toast.error("Product is not our list ");
       }
       setQuery("");
     } catch {

@@ -10,11 +10,6 @@ function WishlistPage() {
   const status = useSelector((state) => state.wishList.status);
   const product = products.map((item) => item.product);
 
-  // useEffect(() => {
-  //   dispatch(FetchWishList());
-  // }, []);
-
-  // console.log(product);
   return (
     <div>
       {status === "loading" ? (

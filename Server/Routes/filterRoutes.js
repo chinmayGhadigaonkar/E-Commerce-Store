@@ -5,27 +5,34 @@ const router = Router();
 // Filter products
 router.get("/products", async (req, res) => {
   try {
-    const { categories, minPrice, maxPrice } = req.query;
-    let filter = {};
+    const { categories, sizes, minPrice, maxPrice } = req.query;
+
+    const products = await Product.find();
+    // Filtering logic based on query parameters
+
+    let filteredProducts = products;
 
     if (categories) {
-      // Split the categories string into an array if it's provided
-      filter.category = Array.isArray(categories) ? categories : [categories];
+      const categoryArray = categories.split(","); // Convert comma-separated values to an array
+      filteredProducts = filteredProducts.filter((product) =>
+        categoryArray.includes(product.category),
+      );
+    }
+
+    if (sizes) {
+      const sizeArray = sizes.split(","); // Convert comma-separated values to an array
+      filteredProducts = filteredProducts.filter((product) =>
+        sizeArray.includes(product.size),
+      );
     }
 
     if (minPrice && maxPrice) {
-      filter.price = { $gte: Number(minPrice), $lte: Number(maxPrice) };
+      filteredProducts = filteredProducts.filter(
+        (product) => product.price >= minPrice && product.price <= maxPrice,
+      );
     }
 
-    const products = await Product.find(filter);
-
-    if (products.length === 0) {
-      res
-        .status(404)
-        .json({ message: "No products found matching the criteria." });
-    } else {
-      res.json(products);
-    }
+    res.json(filteredProducts);
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }

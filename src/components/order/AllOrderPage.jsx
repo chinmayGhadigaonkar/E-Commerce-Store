@@ -25,7 +25,6 @@ const AllOrderPage = () => {
     fetchData();
   }, []);
   if (!order) {
-    // Handle loading state
     return <p>Loading...</p>;
   }
   return (
@@ -64,11 +63,11 @@ const AllOrderPage = () => {
                         <td className="px-2 py-3">
                           {product.orderItems.map((item) => {
                             return (
-                              <div className="flex ">
+                              <div className="flex my-2 ">
                                 <img
                                   alt="ecommerce"
                                   className=" object-fill  h-20 ml-2 w-30 "
-                                  src={item.img}
+                                  src={item.img[0]}
                                 />{" "}
                                 <h1 className=" my-2 mx-2">{item.title}</h1>
                               </div>

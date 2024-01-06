@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { VITE_BACKEND_URL } from "../../config";
 import { ImCross } from "react-icons/im";
+import { useNavigate } from "react-router-dom";
 
 const FilterPage = ({ filterBtn, setFilter }) => {
   const [rangeValue, setRangeValue] = useState(0);
   const [selectedCategories, setSelectedCategories] = useState([]);
   const [selectedSize, setSelectedSize] = useState([]);
-
+  const navigate = useNavigate();
   const handleCategoryChange = (category) => {
-    // Toggle the selected category in the state
     if (selectedCategories.includes(category)) {
       setSelectedCategories(
         selectedCategories.filter((cat) => cat !== category),
@@ -19,41 +19,50 @@ const FilterPage = ({ filterBtn, setFilter }) => {
   };
 
   const handleSizeChange = (size) => {
-    if (setSelectedSize.includes(size)) {
-      setSelectedSize(selectedCategories.filter((cat) => cat !== size));
+    if (selectedSize.includes(size)) {
+      setSelectedSize(selectedSize.filter((s) => s !== size));
     } else {
       setSelectedSize([...selectedSize, size]);
     }
   };
-  // const fetchData = async () => {
-  //   try {
-  //     const categoryQuery = selectedCategories.join(",");
-  //     const res = await fetch(
-  //       `${VITE_BACKEND_URL}/filter/products?category=${categoryQuery}&minPrice=0&maxPrice=${rangeValue}`,
-  //       {
-  //         method: "GET",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         credentials: "include",
-  //       },
-  //     );
 
-  //     if (res.ok) {
-  //       const data = await res.json();
-  //       console.log(data);
-  //       // Handle the fetched data as needed
-  //     } else {
-  //       console.error("Failed to fetch data from the server");
-  //     }
-  //   } catch (error) {
-  //     console.error("An error occurred while fetching data:", error);
-  //   }
-  // };
+  const fetchData = async () => {
+    try {
+      const categoryQuery = selectedCategories.join(",");
+      const sizeQuery = selectedSize.join(",");
+
+      const res = await fetch(
+        `${VITE_BACKEND_URL}/filter/products?categories=${categoryQuery}&minPrice=0&maxPrice=${rangeValue}&sizes=${sizeQuery} `,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        },
+      );
+
+      if (res.ok) {
+        const data = await res.json();
+        navigate("/filterproduct", {
+          state: {
+            data,
+          },
+        });
+        // Handle the fetched data as needed
+      } else {
+        console.error("Failed to fetch data from the server");
+      }
+    } catch (error) {
+      console.error("An error occurred while fetching data:", error);
+    }
+  };
 
   useEffect(() => {
-    fetchData();
-  }, [selectedCategories, rangeValue]);
+    const debounce = setTimeout(fetchData(), 800);
+
+    return clearTimeout(debounce);
+  }, [selectedCategories, rangeValue, selectedSize]);
 
   return (
     <>
@@ -104,7 +113,7 @@ const FilterPage = ({ filterBtn, setFilter }) => {
               checked={selectedCategories.includes("Sweatshirts")}
             />
             <label htmlFor="Sweatshirts" className="ml-1 cursor-pointer">
-              Mugs
+              Sweatshirts
             </label>
             <br />
             <input

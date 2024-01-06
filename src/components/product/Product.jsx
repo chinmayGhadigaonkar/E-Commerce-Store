@@ -58,19 +58,19 @@ const Product = () => {
                 <img
                   alt="content"
                   className="object-cover object-center h-full w-full"
-                  src="https://m.media-amazon.com/images/I/51H5aeESVyL._SX522_.jpg"
+                  src="https://image.spreadshirtmedia.com/image-server/v1/products/T20A2PA4162PT17X75Y1D1042996019W17822H27760/views/1,width=378,height=378,appearanceId=2,backgroundColor=F2F2F2/bigfoot-american-flag-svg-shirt.jpg"
                 />
               </div>
               <h2 className="text-xl font-medium title-font text-gray-900 mt-5">
-                Mugs
+                Sweatshirts
               </h2>
               <p className="text-base leading-relaxed mt-2">
                 {" "}
-                Our mugs are perfect for every interest, including coding mugs
-                for tech enthusiasts, anime mugs, and casual mugs for everyday
-                use. All of our mugs are made with high-quality materials and
-                are designed to be durable and long-lasting. Shop now and find
-                the perfect mug for you!
+                Our sweatshirts are perfect for every occasion, whether you're
+                looking for a casual everyday sweatshirt or something to wear to
+                the gym. We have a variety of styles to choose from, including
+                coding sweatshirts, anime sweatshirts, and casual sweatshirts
+                for everyday wear.
               </p>
               <Link
                 to="/Mugs"

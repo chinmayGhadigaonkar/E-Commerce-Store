@@ -20,50 +20,50 @@ const OrderSummary = () => {
 
   return (
     <>
-      <h1 className="text-2xl font-semibold  text-gray-900  my-1">
+      <h1 className="text-2xl font-semibold  sm:text-center text-gray-900  my-2">
         Your Order Successfully place
       </h1>
-      <div className=" flex  space-x-20">
-        <div className="border-2 my-2 space-y-3 w-2/5 ">
+      <div className=" md:flex flex-shrink px-4 space-x-2 md:space-x-20">
+        <div className="border-2 h-fit my-2 space-y-3 md:w-2/5 w-fit mx-auto ">
           <h1 className="border-b-2 text-xl bg-gray-100 font-bold px-2 py-1  text-gray-900   ">
             Order Detail
           </h1>
-          <div>
-            <span className=" font-semibold  mx-3 ">Order Id :</span>{" "}
-            <span>{order._id}</span>
-          </div>
-          <div>
-            <span className=" font-semibold  mx-3 ">Name : </span>{" "}
-            <span>Chinmay Ghadigaonkar</span>
-          </div>
-          <div className="flex ">
-            <div className=" font-semibold  mx-2 ">Address : </div>
-            <div className="flex-1 px-1">{shippingInfo.address}</div>
-          </div>
-          <div>
-            <span className=" font-semibold  mx-3 ">City: </span>
-            <span> {shippingInfo.city}</span>
-          </div>
-          <div>
-            <span className=" font-semibold  mx-3 ">Phone No : </span>
-            <span>{shippingInfo.phoneNo}</span>
+          <div className="px-3  py-2 space-y-4">
+            <div>
+              <span className=" font-semibold  mx-3 ">Order Id :</span>{" "}
+              <span>{order._id}</span>
+            </div>
+            <div>
+              <span className=" font-semibold  mx-3 ">Name : </span>{" "}
+              <span>{JSON.parse(localStorage.getItem("userInfo"))}</span>
+            </div>
+            <div className="flex ">
+              <div className=" font-semibold  mx-2 ">Address : </div>
+              <div className="flex-1 px-1">{shippingInfo.address}</div>
+            </div>
+            <div>
+              <span className=" font-semibold  mx-3 ">City: </span>
+              <span> {shippingInfo.city}</span>
+            </div>
+            <div>
+              <span className=" font-semibold  mx-3 ">Phone No : </span>
+              <span>{shippingInfo.phoneNo}</span>
+            </div>
           </div>
         </div>
         <div>
-          <div className=" py-3 w-full ">
-            <div className="lg:w-3/3 w-full  overflow-auto">
+          <div className=" py-3 mx-auto ">
+            <div className="lg:w-3/3  w-fit">
               <table className="table-auto w-full text-left whitespace-no-wrap">
                 <thead>
                   <tr>
                     <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tl rounded-bl">
                       Product
                     </th>
-                    {/* <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">Name</th> */}
 
                     <th className="px-4 py-3 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100">
                       Price
                     </th>
-                    {/* <th className="w-10 title-font tracking-wider font-medium text-gray-900 text-sm bg-gray-100 rounded-tr rounded-br"></th> */}
                   </tr>
                 </thead>
                 <tbody>
@@ -76,8 +76,8 @@ const OrderSummary = () => {
                           <div className="flex ">
                             <img
                               alt="ecommerce"
-                              className=" object-fill  h-20 ml-2 w-30 "
-                              src={product.img}
+                              className=" object-cover   h-20  w-30 "
+                              src={product.img[0]}
                             />{" "}
                             <h1 className=" my-2 mx-2">
                               {product.title} ( 1 )

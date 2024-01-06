@@ -33,7 +33,6 @@ const Checkout = ({ setChildren, setShowModal }) => {
     shippingPrice,
     productTPrice,
   ) => {
-    // console.log(orderAddress);
     if (orderAddress && cartProduct) {
       const totalPrice = parseInt(productTPrice + taxPrice + shippingPrice);
       const data = {
@@ -54,7 +53,6 @@ const Checkout = ({ setChildren, setShowModal }) => {
       for (let index = 0; index < orderItems.length; index++) {
         dispatch(updateQuantity(orderItems[index]._id));
       }
-
       dispatch(clearCart());
 
       toast.success("Your order is successfully place ");
