@@ -100,7 +100,7 @@ const Navbar = () => {
   };
   return (
     <>
-      <div className="sm:h-28 h-32  shadow-md  flex flex-col overflow-hidden-x md:flex-row w-[100%] justify-between items-center  z-30  ">
+      <div className="sm:h-28 h-32  px-2 shadow-md  flex flex-col overflow-hidden-x md:flex-row w-[100%] justify-between items-center  z-30  ">
         <div className="logo md:order-1 flex  justify-between md:w-[60vw] w-[100vw] order-1   items-center ">
           <Link to="/">
             <h1 className=" ml-2 text-center font-bold text-2xl py-6 text-purple-500 cursor-pointer ">
@@ -120,7 +120,7 @@ const Navbar = () => {
               ? "translate-x-0 md:flex-row flex-col "
               : "translate-x-[1000px]  "
           }   `}>
-          <li className="my-2  w-64 space-x-2 mx-auto  flex font-semibold text-gray-900 md:text-md text-center  ">
+          <li className="  w-64 space-x-2 mx-auto  flex font-semibold text-gray-900 md:text-md text-center  ">
             <input
               type="text"
               name="search"
@@ -203,24 +203,6 @@ const Navbar = () => {
               </div>
             )}
           </li>
-          {/* <li>
-            {!localStorage.getItem("userInfo") ? (
-              <div className=" mx-auto  w-10">
-                <Link to="/login">
-                  <BiLogIn className="w-8 h-12  text-purple-500  cursor-pointer " />
-                </Link>
-              </div>
-            ) : (
-              <div className="mx-auto w-10">
-                <Link to="/">
-                  <BiLogOut
-                    onClick={onLogout}
-                    className="w-8 h-12  text-purple-500  cursor-pointer  "
-                  />
-                </Link>
-              </div>
-            )}
-          </li> */}
         </div>
 
         <div className=" md:static  sm:relative   inline-flex mr-0   duration-200   -top-5  md:order-3 w-12  sm:justify-between items-end  order-2  ml-auto ">

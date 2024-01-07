@@ -1,10 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Tshirt from "./components/category/Tshirt";
 import Home from "./Pages/Home";
-import Mugs from "./components/category/Mugs";
 import Navbar from "./components/common/Navbar";
 import Filter from "./components/Filter/Filter";
-import Caps from "./components/category/Caps";
 import Footer from "./components/common/Footer";
 import SingleProductPage from "./components/product/SingleProductPage";
 import Login from "./Pages/Login";

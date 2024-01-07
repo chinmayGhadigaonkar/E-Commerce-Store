@@ -19,23 +19,26 @@ function WishlistPage() {
       ) : (
         <div className="px-5 py-4 mx-auto">
           {products == null ? (
-            <div className="container text-center mt-16 ">
-              <h1 className={`text-2xl font-semibold  text-gray-900  my-2 `}>
-                My WishList{" "}
-              </h1>
-            </div>
-          ) : (
-            <div className="container text-center mt-16 ">
+            <div className=" text-center mt-16 ">
               <h1 className={`text-2xl font-semibold  text-gray-900  my-2 `}>
                 Your Wishlist is Empty
               </h1>
             </div>
+          ) : (
+            <div className=" text-center mt-16 ">
+              <h1
+                className={`text-2xl font-semibold text-center text-gray-900  my-2 `}>
+                My WishList{" "}
+              </h1>
+            </div>
           )}
 
-          <div className="flex flex-wrap  justify-center items-center ml-3">
-            {product.map((product) => {
-              return <WishListItem product={product} key={product._id} />;
-            })}
+          <div className="px-5 py-12 mx-auto">
+            <div className="flex flex-wrap  justify-center items-center ml-3">
+              {product.map((product) => {
+                return <WishListItem product={product} key={product._id} />;
+              })}
+            </div>
           </div>
         </div>
       )}

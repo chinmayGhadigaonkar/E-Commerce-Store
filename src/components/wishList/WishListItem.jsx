@@ -18,12 +18,12 @@ const WishListItem = ({ product }) => {
     toast.success("Item is remove from cart");
   };
   return (
-    <div className="lg:w-3/12 md:w-1/3 shadow-lg  sm:h-[32rem]  p-4 w-full border-2 mx-2 my-2">
+    <div className="lg:w-3/12 shadow-lg sm:w-2/4 md:w-1/3 h-[31rem] p-4 w-full border-2 mx-2 my-2">
       <Link to={`/product/${product.slug}`}>
         <div className="block relative rounded overflow-hidden bg-purple-900 cursor-pointer">
           <img
             alt="ecommerce"
-            className="object-fit object-center w-full h-[20rem] block"
+            className="object-fit object-center w-full h-[18rem] block"
             src={product.img[0]}
           />
         </div>
@@ -34,7 +34,6 @@ const WishListItem = ({ product }) => {
           <h2 className="text-gray-900 title-font text-sm font-medium">
             {product.title}
           </h2>
-          {/* <p className="mt-1">₹ {product.price}</p> */}
         </div>
       </Link>
       <div className="flex justify-between">

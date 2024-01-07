@@ -1,22 +1,25 @@
-import React from 'react'
+import React from "react";
 
-const MultiImg = ({IMG, setchangeIMG  }) => {
-
- const handleonchange =(img)=>{
-    setchangeIMG(img)
- }
+const MultiImg = ({ IMG, setchangeIMG }) => {
+  const handleonchange = (img) => {
+    setchangeIMG(img);
+  };
 
   return (
     <>
-
-    <div className={` w-40 h-52 my-3 border-2 rounded-xl  cursor-pointer mx-auto  `}  onClick={()=>{handleonchange(IMG)}}>
-      <img className='w-40  bg-cover h-[100%] object-cover object-center   rounded-xl  '   src={IMG} alt="" />
-
-    </div>
-
-    
+      <div
+        className={` md:w-35 h-52 my-3 border-2 rounded-xl  cursor-pointer mx-auto  `}
+        onClick={() => {
+          handleonchange(IMG);
+        }}>
+        <img
+          className="md:w-40  bg-cover h-[100%] object-cover object-center   rounded-xl  "
+          src={IMG}
+          alt=""
+        />
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default MultiImg
+export default MultiImg;

@@ -51,6 +51,7 @@ const AllProducts = ({ category, Head }) => {
                           src={product.img[0]}
                         />
                       </div>
+
                       <div className="mt-4 w-full">
                         <h3 className="text-gray-500 text-sm tracking-widest title-font mb-1">
                           {product.category}

@@ -81,7 +81,6 @@ const cartSlice = createSlice({
 export const cartFetch = createAsyncThunk(
   "fetch/allcartproduct",
   async (state, action) => {
-    console.log("fetch cart product");
     const res = await fetch(`${VITE_BACKEND_URL}/cart/getcart`, {
       headers: {
         "content-type": "application/json",

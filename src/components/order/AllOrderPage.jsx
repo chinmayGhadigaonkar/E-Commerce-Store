@@ -63,10 +63,10 @@ const AllOrderPage = () => {
                         <td className="px-2 py-3">
                           {product.orderItems.map((item) => {
                             return (
-                              <div className="flex my-2 ">
+                              <div className="sm:flex my-2 ">
                                 <img
                                   alt="ecommerce"
-                                  className=" object-fill  h-20 ml-2 w-30 "
+                                  className=" object-fit object-center w-[5rem] h-[5rem] block "
                                   src={item.img[0]}
                                 />{" "}
                                 <h1 className=" my-2 mx-2">{item.title}</h1>

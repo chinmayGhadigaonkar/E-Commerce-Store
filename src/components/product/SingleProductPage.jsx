@@ -206,7 +206,7 @@ const SingleProductPage = () => {
                       <span className="text-gray-600 ml-3">4 Reviews</span>
                     </span>
                   </div>
-                  <p className="leading-relaxed">{p.desc}</p>
+                  <p className="leading-relaxed">{p.description}</p>
                   <div
                     className={`flex mt-2 items-center pb-2  border-gray-100 mb-5 `}>
                     <div className="flex ml-1 my-2  items-center">
@@ -239,14 +239,14 @@ const SingleProductPage = () => {
                     </div>
                   </div>
 
-                  <div className="flex flex-1  justify-between  my-4">
+                  <div className="sm:flex flex-1    justify-between  my-4">
                     <span className="title-font font-medium text-2xl  text-gray-900">
                       ₹{p.price}
                     </span>
-                    <div className="flex  space-x-3">
+                    <div className="flex my-3 space-x-3">
                       <button
                         disabled={p.availableQty == 0 ? true : false}
-                        className={`flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none rounded ${
+                        className={`flex sm:ml-auto text-white bg-purple-500 border-0 py-2 sm:px-6 px-2 focus:outline-none rounded ${
                           p.availableQty == 0
                             ? "bg-purple-50  "
                             : " bg-purple-500 hover:bg-purple-600"
@@ -254,13 +254,12 @@ const SingleProductPage = () => {
                         onClick={() => {
                           handleOnWishList(slugproduct);
                         }}>
-                        Add To WishList{" "}
-                        {/* <AiOutlineHeart className="w-5 h-5 mx-1   text-white border-white cursor-pointer   " /> */}
+                        Add To WishList
                       </button>
 
                       <button
                         disabled={p.availableQty == 0 ? true : false}
-                        className={`flex ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none rounded ${
+                        className={`flex sm:ml-auto text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none rounded ${
                           p.availableQty == 0
                             ? "bg-purple-50  "
                             : " bg-purple-500 hover:bg-purple-600"
