@@ -7,10 +7,10 @@ const SearchPage = () => {
 
   return (
     <>
-      <section className="text-gray-900 body-font ">
+      <section className="border-white  text-gray-900 body-font  mx-auto">
         {products != 0 ? (
           <div>
-            <h4 className=" text-2xl  font-semibold  text-gray-900  my-12 mx-4">
+            <h4 className=" text-2xl  text-center font-semibold  text-gray-900  my-6 mx-4">
               Your search products..{" "}
             </h4>
           </div>
@@ -22,8 +22,8 @@ const SearchPage = () => {
           </div>
         )}
 
-        <div className="container px-5 py-1 mx-auto">
-          <div className="flex flex-wrap  item-center mx-auto  ">
+        <div className=" px-5 py-1 mx-auto">
+          <div className="flex flex-wrap justify-center  item-center mx-auto  ">
             {products.map((product) => {
               return (
                 <div

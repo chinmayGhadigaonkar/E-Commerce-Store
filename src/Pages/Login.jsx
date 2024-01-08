@@ -25,10 +25,11 @@ const Login = () => {
           password: login.password[0],
         }),
       });
-      const { success, user, msg } = await res.json();
-      const { email, name } = user;
+      const { success, user, token, msg } = await res.json();
+      // const { email, name } = user;
+      const data = { user, token };
       if (success) {
-        dispach(setUser(name));
+        dispach(setUser(data));
         setlogin({ email: "", password: "" });
         toast.success("Login successfully");
         navigator("/");

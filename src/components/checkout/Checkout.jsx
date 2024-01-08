@@ -69,26 +69,27 @@ const Checkout = ({ setChildren, setShowModal }) => {
         </h1>
 
         <div className="my-4 ml-2">
-          {address.map((info) => {
-            return (
-              <div key={info._id}>
-                <input
-                  type="radio"
-                  value={orderAddress}
-                  onClick={() => {
-                    SetOrderAddress(info);
-                  }}
-                  id="address"
-                  name="address"
-                />{" "}
-                <label htmlFor="address">
-                  {" "}
-                  {info.address} , {info.city}-{info.pinCode} , {info.state}
-                </label>
-                <br />
-              </div>
-            );
-          })}
+          {address &&
+            address.map((info) => {
+              return (
+                <div key={info._id}>
+                  <input
+                    type="radio"
+                    value={orderAddress}
+                    onClick={() => {
+                      SetOrderAddress(info);
+                    }}
+                    id="address"
+                    name="address"
+                  />{" "}
+                  <label htmlFor="address">
+                    {" "}
+                    {info.address} , {info.city}-{info.pinCode} , {info.state}
+                  </label>
+                  <br />
+                </div>
+              );
+            })}
         </div>
         <button
           className=" my-2 ml-2 text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded"

@@ -47,6 +47,7 @@ export const getAddress = createAsyncThunk(
     const res = await fetch(`${VITE_BACKEND_URL}/address/getaddress`, {
       headers: {
         "content-type": "application/json",
+        "auth-token": JSON.parse(localStorage.getItem("auth-token")),
       },
       credentials: "include",
     });
@@ -63,6 +64,7 @@ export const addAddress = createAsyncThunk("fetch/addAddress", async (data) => {
     method: "POST",
     headers: {
       "content-type": "application/json",
+      "auth-token": JSON.parse(localStorage.getItem("auth-token")),
     },
     credentials: "include",
     body: JSON.stringify({

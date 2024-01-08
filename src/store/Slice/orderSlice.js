@@ -42,6 +42,7 @@ export const getOrder = createAsyncThunk("fetch/getOrder", async (id) => {
     method: "GET",
     headers: {
       "content-type": "application/json",
+      "auth-token": JSON.parse(localStorage.getItem("auth-token")),
     },
     credentials: "include",
   });
@@ -57,6 +58,7 @@ export const getAllOrder = createAsyncThunk("fetch/getAllOrder", async () => {
     method: "GET",
     headers: {
       "content-type": "application/json",
+      "auth-token": JSON.parse(localStorage.getItem("auth-token")),
     },
     credentials: "include",
   });
@@ -76,6 +78,7 @@ export const createOrder = createAsyncThunk(
       method: "POST",
       headers: {
         "content-type": "application/json",
+        "auth-token": JSON.parse(localStorage.getItem("auth-token")),
       },
       credentials: "include",
       body: JSON.stringify({

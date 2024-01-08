@@ -7,11 +7,12 @@ const router = Router();
 router.get("/getcart", authMiddleware, async (req, res) => {
   try {
     const _id = req.user._id;
+
     const cart = await Cart.findOne({ user: _id });
 
     if (!cart) {
-       res.status(400).json("cart does not exist");
-       return
+      res.status(400).json("cart does not exist");
+      return;
     }
     res.status(200).json({ success: true, products: cart.products });
   } catch (e) {
@@ -43,17 +44,16 @@ router.post("/addtocart", authMiddleware, async (req, res) => {
     });
 
     if (isExist) {
-      res.status(400).json({success:false , msg:"product already exists"});
+      res.status(400).json({ success: false, msg: "product already exists" });
       return;
     }
 
     productsArray.push(products);
     const result = await Cart.findByIdAndUpdate(cart._id, {
-     
       products: productsArray,
     });
 
-    res.status(200).json({ 
+    res.status(200).json({
       success: true,
       msg: "Added to the cart successfully",
       products: productsArray,
@@ -61,7 +61,7 @@ router.post("/addtocart", authMiddleware, async (req, res) => {
   } catch (error) {
     res.status(400).json({ error: "Something went'to Wrong" });
   }
-});  
+});
 // delete Item cart
 router.delete("/deleteitem", authMiddleware, async (req, res) => {
   try {
@@ -73,7 +73,7 @@ router.delete("/deleteitem", authMiddleware, async (req, res) => {
     const cart = await Cart.findOne({ user: _id });
     if (!cart) {
       res.status(404).json({ success: false, error: "Cart is not found" });
-      return
+      return;
     }
 
     const productsArray = cart.products;
@@ -81,9 +81,19 @@ router.delete("/deleteitem", authMiddleware, async (req, res) => {
     const newArray = productsArray.filter((product) => {
       return product.title !== productName;
     });
-    const result = await Cart.findByIdAndUpdate(cart._id, { products: newArray } , {new:true});
+    const result = await Cart.findByIdAndUpdate(
+      cart._id,
+      { products: newArray },
+      { new: true },
+    );
 
-    res.status(200).json({ success: true,cart:result ,msg:"Item delete form cart successfully" });
+    res
+      .status(200)
+      .json({
+        success: true,
+        cart: result,
+        msg: "Item delete form cart successfully",
+      });
   } catch (e) {
     res.status(400).json({ e });
   }
@@ -96,18 +106,15 @@ router.delete("/clearcart", authMiddleware, async (req, res) => {
     const cart = await Cart.findOne({ user: _id });
 
     if (!cart) {
-       res.status(400).json({success: false, error:"cart does not exist"});
-       return
+      res.status(400).json({ success: false, error: "cart does not exist" });
+      return;
     }
 
-    const result = await Cart.findByIdAndUpdate(cart._id,{products:[]});
-    res.status(200).json({success: true,msg:"Your Cart is Clear"});
+    const result = await Cart.findByIdAndUpdate(cart._id, { products: [] });
+    res.status(200).json({ success: true, msg: "Your Cart is Clear" });
   } catch {
     res.status(400).json({ error: "Something went'to Wrong" });
   }
 });
-
-
-
 
 export default router;

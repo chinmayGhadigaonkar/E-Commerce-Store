@@ -84,6 +84,7 @@ export const cartFetch = createAsyncThunk(
     const res = await fetch(`${VITE_BACKEND_URL}/cart/getcart`, {
       headers: {
         "content-type": "application/json",
+        "auth-token": JSON.parse(localStorage.getItem("auth-token")),
       },
       credentials: "include",
     });
@@ -100,6 +101,7 @@ export const addToCart = createAsyncThunk(
       method: "POST",
       headers: {
         "content-type": "application/json",
+        "auth-token": JSON.parse(localStorage.getItem("auth-token")),
       },
       credentials: "include",
       body: JSON.stringify({
@@ -121,6 +123,7 @@ export const clearCart = createAsyncThunk("fetch/cartClear", async () => {
     method: "DELETE",
     headers: {
       "content-type": "application/json",
+      "auth-token": JSON.parse(localStorage.getItem("auth-token")),
     },
     credentials: "include",
   });
@@ -137,6 +140,7 @@ export const removeCart = createAsyncThunk(
       method: "DELETE",
       headers: {
         "content-type": "application/json",
+        "auth-token": JSON.parse(localStorage.getItem("auth-token")),
       },
       credentials: "include",
       body: JSON.stringify({

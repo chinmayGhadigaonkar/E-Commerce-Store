@@ -65,6 +65,7 @@ export const FetchWishList = createAsyncThunk(
       const res = await fetch(`${VITE_BACKEND_URL}/wishlist/get`, {
         headers: {
           "content-type": "application/json",
+          "auth-token": JSON.parse(localStorage.getItem("auth-token")),
         },
         credentials: "include",
       });
@@ -86,6 +87,7 @@ export const AddToWishList = createAsyncThunk(
         method: "POST",
         headers: {
           "content-type": "application/json",
+          "auth-token": JSON.parse(localStorage.getItem("auth-token")),
         },
         body: JSON.stringify({
           productId,
@@ -112,6 +114,7 @@ export const RemoveFromWishList = createAsyncThunk(
           method: "DELETE",
           headers: {
             "content-type": "application/json",
+            "auth-token": JSON.parse(localStorage.getItem("auth-token")),
           },
           credentials: "include",
         },
@@ -134,6 +137,7 @@ export const ClearWishList = createAsyncThunk("/clearWishList", async () => {
       method: "DELETE",
       headers: {
         "content-type": "application/json",
+        "auth-token": JSON.parse(localStorage.getItem("auth-token")),
       },
       credentials: "include",
     });
