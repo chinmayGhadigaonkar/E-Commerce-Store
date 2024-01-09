@@ -20,7 +20,7 @@ const port = process.env.PORT || 8000;
 
 // cors
 const corsOptions = {
-  origin: ["http://localhost:5173", "*"],
+  origin: ["http://localhost:5173", "https://taupe-beignet-d5041e.netlify.app"],
   credentials: true, //access-control-allow-credentials:true
 };
 
