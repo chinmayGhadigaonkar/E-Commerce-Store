@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, HashRouter } from "react-router-dom";
 import Home from "./Pages/Home";
 import Navbar from "./components/common/Navbar";
 import Filter from "./components/Filter/Filter";
@@ -58,7 +58,7 @@ function App() {
   };
 
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Navbar />
       <Modal
         children={children}
@@ -109,7 +109,7 @@ function App() {
       </Routes>
 
       <Footer></Footer>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
